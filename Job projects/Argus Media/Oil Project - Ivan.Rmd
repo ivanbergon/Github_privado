@@ -1,22 +1,610 @@
----
-title: "R Notebook"
-output: html_notebook
----
 
-This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
 
-Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+
+# Argus Media - Oil Dataset Project
+## Ivan Berlim Gonçalves
+
+------------------
+
+### WHAT IS GAMLSS
+
+Generalized Additive Models for Location, Scale and Shape (GAMLSS) were introduced by Rigby and Stasinopoulos (2001, 2005) and Akantziliotou et al. (2002) as a way of overcoming some of the limitations associated with Generalized Linear Models (GLM) and Generalized Additive Models (GAM) (Nelder and Wedderburn, 1972 and Hastie and Tibshirani, 1990, respectively).
+
+In GAMLSS the exponential family distribution assumption for the response variable (y) is relaxed and replaced by a general distribution family, including highly skew and/or kurtotic distributions. The systematic part of the model is expanded to allow modelling not only the
+mean (or location) but other parameters of the distribution of y as linear parametric and/or additive non-parametric functions of explanatory variables and/or random effects. Maximum (penalised) likelihood estimation is used to fit the models.
+
+There are two algorithms to fit the models, the CG and RS algorithms.
+
+#### GAMMLSS guide used to this project:
+
+http://www.gamlss.com/wp-content/uploads/2013/01/gamlss-manual.pdf
+
+### DATASET INFORMATION:
+
+Link: https://rdrr.io/cran/gamlss.data/man/oil.html
+
+------------------
+
+### DATASET DESCRIPTION
+
+The Oil data: Using model selection to discover what affects the price of oil. The data s contains the daily prices of front month WTI (West Texas Intermediate) oil price traded by NYMEX (New York Mercantile Exchange). The front month WTI oil price is a futures contract with the shortest duration that could be purchased in the NYMEX market. The idea is to use other financially traded products (e.g., gold price) to discover what might affect the daily dynamics of the price of oil.
+
+------------------
+
+### DATASET FORMAT
+
+#### OILPRICE
+the log price of front month WTI oil contract traded by NYMEX - in financial terms, this is the CL1. This is the response variable.
+
+#### CL_log
+numeric vectors which are the log prices of the 2 to 15 months ahead WTI oil contracts traded by NYMEX. For example, for the trading day of 2nd June 2016, the CL2 is the WTI oil contract for delivery in August 2016.
+
+#### BDIY_log
+the Baltic Dry Index, which is an assessment of the price of moving the major raw materials by sea.
+
+#### SPX_log
+the S&P 500 index
+
+#### DX1_log
+the US Dollar Index
+
+#### GC1_log
+The log price of front month gold price contract traded by NYMEX
+
+#### HO1_log
+the log price of front month heating oil contract traded by NYMEX
+
+#### USCI_log
+the United States Commodity Index
+
+#### GNR_log
+the S&P Global Natural Resources Index
+
+#### SHCOMP_log
+the Shanghai Stock Exchange Composite Index.
+
+#### FTSE_log
+the FTSE 100 Index
+
+#### respLAG
+the lag 1 of OILPRICE - lagged version of the response variable.
+
+------------------
+
+### DATASET SOURCE
+
+The dataset was downloaded from https://www.quandl.com/.
+
+------------------
+
+### PACKAGES INSTALLED
 
 ```{r}
-plot(cars)
+install.packages("ggplot2")
+install.packages("tidyverse")
+install.packages("tidyr")
+install.packages(c("gamlss","gamlss.add","gamlss.dist"))
+install.packages('corrplot')
+install.packages('cowplot')
+install.packages('Hmisc')
 ```
 
-Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+------------------
 
-When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+### LIBRARIES USED
 
-The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
 ```{r}
-print("test")
+library(gamlss)
+library(gamlss.add)
+library(gamlss.dist)
+library(ggplot2)
+library(corrplot)
+library(cowplot)
+library(Hmisc)
 ```
+
+Extract the Oil Dataset
+
+```{r}
+data(oil)
+```
+-----------
+
+## Exploratory Analysis
+
+```{r}
+head(oil, 3)
+```
+
+```{r}
+print(paste("Number of records: ", nrow(oil)))
+```
+
+```{r}
+print(paste("Number of features: ", ncol(oil)))
+```
+
+```{r}
+colnames(oil)
+```
+
+Let's remove the last day's negotiation and keep the lagged variable only. We want to understand, if the past contracts will affect or not the prediction.
+
+```{r}
+df = oil[,-2:-15]
+head(df,3)
+```
+
+```{r}
+is.null(oil) # There's no null value
+sum(is.na(oil)) # No NA's
+```
+
+
+```{r}
+summary(df)
+```
+-------
+
+### LINEAR OR NON-LINEAR RELATION TO OILPRICE PLOT
+
+Now let's have a quick view if the variables has a linear or non-linear relation to OILPRICE
+
+```{r}
+p1 <- ggplot(df, aes(SPX_log, OILPRICE)) + geom_point()
+p2 <- ggplot(df, aes(DX1_log, OILPRICE)) +  geom_point()
+p3 <- ggplot(df, aes(BDIY_log, OILPRICE)) +  geom_point()
+p4 <- ggplot(df, aes(GC1_log, OILPRICE)) +  geom_point()
+p5 <- ggplot(df, aes(HO1_log, OILPRICE)) +  geom_point()
+p6 <- ggplot(df, aes(FTSE_log, OILPRICE)) +  geom_point()
+p7 <- ggplot(df, aes(USCI_log, OILPRICE)) +  geom_point()
+p8 <- ggplot(df, aes(GNR_log, OILPRICE)) +  geom_point()
+p9 <- ggplot(df, aes(SHCOMP_log, OILPRICE)) +  geom_point()
+```
+
+```{r}
+plot_grid(p1,
+          p2,
+          p3,
+          p4,
+          p5,
+          p6,
+          p7,
+          p8,
+          p9,
+        labels = c('A', 'B', 'D', 'E', 'F', 'G', 'H', 'I', 'J'))# Zoom it (better visualization)
+```
+
+We have a clear linear relation between the target variable and the predictor variables 'DX1_log', 'HO1_log', 'USCI_log' and 'GNR_log'. The other varuables dont have such explicit linear relation but can be interpreted as much.
+
+The plots views give us brief information about X's relation with the Y variable (Oilprice). Some of them we can visualize if there is a positive or negative correlation. So what We can expect from the models coefficients signal:
+
+SPX - Undefined Correlation
+DX1 - Negative Correlation
+BDIY - Positive Correlation
+GC1 - Undefined Correlation
+HO1 - Positive Correlation
+FTSE - Undefined Correlation
+USCI - Positive Correlation
+GNR - Positive Correlation
+SHCOMP - Undefined Correlation
+
+--------
+
+### VARIABLES DISTRIBUTIONS
+
+Having a overview of the variable distributions
+
+```{r}
+attach(df)
+par(mfrow=c(3,4))
+hist(OILPRICE, main="Oil Price")
+hist(BDIY_log, main="Baltic Dry")
+hist(SPX_log, main="S&P 500 index")
+hist(DX1_log, main="US Dollar Index")
+hist(GC1_log, main="Gold price contract trades")
+hist(HO1_log, main="Heating Oil price contract traded")
+hist(USCI_log, main="United States Commodity Index")
+hist(GNR_log, main="S&P Global Natural Resources Index")
+hist(SHCOMP_log,main="Shanghai Stock Exchange Composite Index")
+hist(FTSE_log, main="FTSE 100 Index")
+hist(respLAG, main="OILPRICE - lagged version of the response variable")
+```
+-----
+
+### VARIABLES CORRELATION
+
+As We can see, most of the variables don't follow a normal distribution, so if We want to analyse a correlation metric, it will need a non parametric Correlation-test (Spearmen). Now We can confirm the previous plots and the real variables correlation.
+
+```{r}
+corr_mat=cor(df,method="s")
+corrplot(corr_mat, method = "color",
+         order = "hclust", 
+         addCoef.col = "black",
+         tl.col = "black")
+```
+
+Let's check if these correlations are significant
+
+```{r}
+Matrix1 <- rcorr(as.matrix(df), type = "spearman")
+print(Matrix1$P)# P-value of the correlations
+```
+
+The Spearman test has a null hypothesis considering the variables correlation = 0 (no correlation between the variables). The results that We got were significant only in the FTSE variable, leading us to understand that only this variable has a correlation with OILPRICE close to zero. Easily to see in the correlation matrix. So, We are able to conclude that all other variables have a correlation different to zero with the OILPRICE.
+
+---
+
+## Data Preparation
+
+----
+
+### VARIABLES TRANSFORMATIONS
+
+The variables in the dataset are already transformed with the Log transformations, applying more changes to these variables, would bring a complex interpretation of the dataset and a very generic prediction. The model accepts many distributions for the independent variables, it means that We will not transform our variables distributions. Prices have frequently asymmetric distributions, and they are well fitted in the GAMLSS. So We can already split the data.
+
+
+------
+
+### MODELS CHOOSEN
+The model performance will be compared in two conditions. Keeping all the past oil prices variables (Oil dataset), and the second one, keeping only the lagged oil price variable as the past contracts (DF dataset). We want to understand if the past contracts will affect or not in the prediction.
+
+----
+
+### MODEL REQUIREMENTS
+Before running the model, We need to evaluate the Y variable distribution. A Y distribution needs to be specified in the model arguments, It's necessary to switch between all the distributions present in its package to find which one has the lowest non-parametric test values. In this case, after switching between all others distributions, The Box-Cox power exponential (BCPE) Distribution had the lowest non-parametrics tests value (GD,AIC,SBC) and the closest approach to the OILPRICE distribution and it can be seen by the red line over the OILPRICE histogram.
+
+```{r}
+histDist(df$OILPRICE, 
+         family = BCPE ,
+         density = T)
+```
+----
+
+## MODEL TRAINING
+
+NOW LET'S TRAIN OUR MODEL
+
+THE TRAINING MODEL WILL BE PERFORMED IN 4 STEPS TO IDENTIFY IF THE PAST CONTRACTS LAGGED OR NOT LAGGED
+
+WILL IMPACT IN THE MODEL PREDICTION, ALSO IT WILL BE COMPARED USING ADDITIVE TERMS:
+1 - USING THE LAGGED VARIABLE ONLY, REMOVING THE PAST TRADED CONTRACTS NEGOTIATED (DF DATASET)
+2 - USING ALL THE PAST CONTRACTS VARIABLES (OIL DATASET)
+3 - APPLYING ADDITIVE TERMS IN DF DATASET
+4 - APPLYING ADDITIVE TERMS IN OIL DATASET
+
+Splitting data Train/Test: 70% trainset 30% testset.
+
+
+```{r}
+# DF dataset cut off the past traded Oil contracts and keep only the lagged variable
+idx_DF = sample(dim(df)[1] , 0.70*dim(df)[1] , replace = F)
+trainset_DF = df[idx_DF , ]
+testset_DF = df[-idx_DF , ]
+
+# OIL dataset keeps all the variables with no changes
+idx_OIL = sample(dim(oil)[1] , 0.70*dim(oil)[1] , replace = F)
+trainset_OIL = oil[idx_OIL , ]
+testset_OIL = oil[-idx_OIL , ]
+
+help('dim')
+```
+
+NO ADDITIVE TERMS
+
+```{r}
+# Trainning the models: WITHOUT additive terms
+
+mod_1 <- gamlss(OILPRICE ~ ., family = BCPE, data = trainset_DF, control = gamlss.control(n.cyc = 20))  # Model 1 
+mod_2 <- gamlss(OILPRICE ~ ., family = BCPE, data = trainset_OIL, control = gamlss.control(n.cyc = 20)) # model 2
+```
+
+ADDITIVE TERMS
+The GAMLSS model allows the user to model the distribution parameters mu, sigma, nu and tau as linear, non-linear parametric, non-parametric (smooth) function of the explanatory variables and/or random effects terms. For fitting non-linear, non-parametric (smooth) functions or random effects terms an additive term function has to be fitted. After switching between all the other functions, the smooth functions with the best non parametric results applied to this model were the Cubic splines (cs). Herewith, the find.hyper() function returns the best freedom degree to be used with the Smooth function, in this case, it returns degrees freedom = 2 (df=2).
+
+```{r}
+# Trainning the models: with additive terms
+
+# model 3
+mod_3 <-
+  gamlss(
+    OILPRICE ~ cs(BDIY_log, df = 2) + cs(SPX_log, df = 2) + cs(DX1_log, df = 2) + cs(GC1_log, df = 2) +
+      cs(USCI_log, df = 2) + cs(GNR_log, df = 2) + cs(SHCOMP_log, df = 2) + cs(FTSE_log, df = 2) + cs(respLAG, df = 2) ,
+    family = BCPE,
+    data = trainset_DF
+  )
+
+# model 4
+mod_4 <-
+  gamlss(
+    OILPRICE ~ cs(CL2_log, df = 2) + cs(CL3_log, df = 2) + cs(CL4_log, df = 2) +
+      cs(CL5_log, df = 2) + cs(CL6_log, df = 2) + cs(CL7_log, df = 2) +
+      cs(CL8_log, df = 2) + cs(CL9_log, df = 2) + cs(CL10_log, df = 2) +
+      cs(CL11_log, df = 2) + cs(CL12_log, df = 2) + cs(CL13_log, df = 2) +
+      cs(CL14_log, df = 2) + cs(CL15_log, df = 2) +
+      cs(BDIY_log, df = 2) + cs(SPX_log, df = 2) + cs(DX1_log, df = 2) + cs(GC1_log, df = 2) +
+      cs(USCI_log, df = 2) + cs(GNR_log, df = 2) + cs(SHCOMP_log, df = 2) + cs(FTSE_log, df = 2) + cs(respLAG, df = 2) ,
+    family = BCPE,
+    data = trainset_OIL
+  )
+```
+
+```{r}
+# 0 > DF PARAMETER RANGE =< 5.
+find.hyper(mod_3,parameters=c(0.01,5))
+find.hyper(mod_4,parameters=c(0.01,5))
+```
+
+df suggestion df = 2 (already applied in the model training)
+
+```{r}
+# Models estimators
+summary(mod_1)
+summary(mod_2)
+summary(mod_3)
+summary(mod_4)
+```
+
+In all model's estimators, anyone had a correlation following the matrix correlation and the plot correlation seen in the previous steps. Otherwise, all the models had estimador with high levels of significance, a sign of overfitting. Therefore, We can assume that, evaluate a model by Its coefficient performance Will not be the best criterion for a prediction validation.
+
+```{r}
+# ANALYZING PREDICTIONS DEVIATIONS
+
+
+testset_DF$pred_1 <- predict(mod_1, newdata=testset_DF, type = "response")
+testset_OIL$pred_2 <- predict(mod_2, newdata=testset_OIL, type = "response")
+testset_DF$pred_3 <- predict(mod_3, newdata=testset_DF[,-12], type = "response")
+testset_OIL$pred_4 <- predict(mod_4, newdata=testset_OIL[,-26], type = "response")
+```
+
+PREDICTION DEVIATION INTERVAL HISTOGRAM
+
+```{r}
+testset_DF$pred.deviation_1  <- round(testset_DF$pred_1/testset_DF$OILPRICE,10)
+testset_OIL$pred.deviation_2 <- round(testset_OIL$pred_2/testset_OIL$OILPRICE,10)
+testset_DF$pred.deviation_3  <- round(testset_DF$pred_3/testset_DF$OILPRICE,10)
+testset_OIL$pred.deviation_4 <- round(testset_OIL$pred_4/testset_OIL$OILPRICE,10)
+
+testset_DF$pred.deviation_1  <- testset_DF$pred.deviation_1-1
+testset_OIL$pred.deviation_2 <- testset_OIL$pred.deviation_2-1
+testset_DF$pred.deviation_3  <- testset_DF$pred.deviation_3-1
+testset_OIL$pred.deviation_4 <- testset_OIL$pred.deviation_4-1
+
+par(mfrow=c(2,2))
+hist(100*testset_DF$pred.deviation_1, main="Prediction 1 deviation interval", xlab = "Deviation percentage", labels = T, xlim =c(-2,2), ylim = c(0,150))
+hist(100*testset_OIL$pred.deviation_2, main="Prediction 2 deviation interval", xlab = "Deviation percentage", labels = T, xlim =c(-2,2), ylim = c(0,150))
+hist(100*testset_DF$pred.deviation_3, main="Prediction 3 deviation interval", xlab = "Deviation percentage", labels = T, xlim =c(-2,2), ylim = c(0,150))
+hist(100*testset_OIL$pred.deviation_4, main="Prediction 4 deviation interval", xlab = "Deviation percentage", labels = T, xlim =c(-2,2), ylim = c(0,150))
+```
+
+Here it is important to visualize if the predictions keep in the range of 2% deviation. Talking about future contracts negotiated, a difference of 1% in oscillations is very common, however 2% is very high. It Means that a large monetary amount got depreciated/appreciated with an oscillation of about 200 points/ticks (which is a significant level of oscillation). So, a model deviation very out of that range (like over 2%) would be a good elimination criterion. But now, let's understand which model keeps more results in the -+1% range. The first model keeps 288 results against 271 from the second one, 288 from the third one, and 269 from the last model . Remembering that our testset has 300 observations. So the first model has 96% of its results with 1% deviation, and the second model has 90%, the third model 96%, and the fourth model 89%.
+
+----
+
+### COMPARING PREDICTION IN A RANGE OF 0,5% DEVIATION
+
+```{r}
+par(mfrow=c(2,2))
+hist(100*testset_DF$pred.deviation_1, main="Prediction 1 deviation interval", xlab = "Deviation percentage", labels = T, xlim =c(-0.5,0.5), ylim = c(0,150))
+hist(100*testset_OIL$pred.deviation_2, main="Prediction 2 deviation interval", xlab = "Deviation percentage", labels = T, xlim =c(-0.5,0.5), ylim = c(0,150))
+hist(100*testset_DF$pred.deviation_3, main="Prediction 3 deviation interval", xlab = "Deviation percentage", labels = T, xlim =c(-0.5,0.5), ylim = c(0,150))
+hist(100*testset_OIL$pred.deviation_4, main="Prediction 4 deviation interval", xlab = "Deviation percentage", labels = T, xlim =c(-0.5,0.5), ylim = c(0,150))
+```
+
+0,5% prediction deviation:
+
+1st model: 79%
+2st model: 76%
+3th model: 78%
+4th model: 77%
+
+The df dataset shows better results.
+
+### RESIDUALS VISUALIZATION
+
+```{r}
+plot(mod_1)
+plot(mod_2)
+plot(mod_3)
+plot(mod_4)
+```
+
+It's possible to visualize the model's residuals have a normal distribution and do not deviate much from the parameters. In this regard, we can't cut off any model for bad performance.
+
+WORM PLOT
+
+```{r}
+# Plotting residuals
+
+par(mfrow=c(2,2))
+wp(mod_1)
+wp(mod_2)
+wp(mod_3)
+wp(mod_4)
+```
+
+The same condition happens here. All model’s residuals follow the trend line. Some of them have a different trend line, but It happens because some models have more variables fitted than others. So it's normal to have more variance and a different trend line. However, all of them have followed it correctly.
+
+```{r}
+
+```
+
+NON PARAMETRIC TESTS
+
+```{r}
+# Getting each model's non parametric test
+
+GD = c(mod_1$G.deviance,mod_2$G.deviance,mod_3$G.deviance,mod_4$G.deviance)#Deviation
+AIC = c(mod_1$aic,mod_2$aic,mod_3$aic,mod_4$aic)# Overfitting
+SBC = c(mod_1$sbc,mod_3$sbc,mod_4$sbc,mod_4$sbc)# Overfitting
+
+GD # First Line
+AIC # Second line
+SBC # Third line
+
+# 1 model           #2 model           #3 model          # 4 model
+```
+
+Here We want to find which model had the lowests values in each test. GD test give us the information about the global variance, in this case the first model had the lowest value, although the others tests were better performed by the third model, which had the lowest AIC and SBC results, meaning that the third model is less likely to be overfitted.
+
+## CONCLUSIONS
+
+We started the analysis process by evaluating the relationships of the explanatory variables with the dependent variable. Given the conditions for evaluating the correlations, we continue with the process verifying the model's estimators (the betas). At this step, we tried to evaluate which model had the coefficients close to the correlation presented in the correlation matrix. Any coefficient had its signs coherent with the Spearman matrix. Therefore, we discard the evaluation of coefficients (betas) as one of the criteria for choosing the best model.
+
+Otherwise, the coefficients still provide important information for the performance of the model. Your significance tests can inform us of your propensity to overfitting. And in this regard, all models had a high level of significance in all coefficients, a great sign for overfitting. So the model's estimators wouldnt help us to understand the predictions.
+
+Talking about the residuals, any model presented values that impacted the reliability of the model's predictions. As for the non-parametric tests, the mod_1 model presented the lowest level of variance with GD = -3535. In the overfitting evaluation with the AIC and SBC tests, the mod_3 model presented better results.
+
+## FINAL CONCLUSION
+
+Given the conditions we evaluated earlier, we had our predictions for each model presented by the variation histograms. Each model had a range of variation that told what its percentage of error was. Considering the conditions given above, such as estimator performance, testing non-parametric hypotheses, we arrive at a very common tie in data science. Which model to choose? For that we must understand our goal . In this case, we want the model that had the best prediction, and make a comparison between the performed predictions. Two models had significant results in their predictions, model 1 (mod_1) and 3 (mod_3). They both had over 77% results in a deviation of 0,5%. Analyzing the non parametrics test, the model 1 had a lower Global deviance, however the AIC and SBC results give advantage to the second model (mod_3). Meanwhile the first model also had the best result in the prediction deviation interval, 79% of its prediction had 0,5% of deviation, a result higher than the other models, simultaneously, the mod_1 had less values out of the 1% deviation, concluding as the best model in these training steps.
+
+We could conclude that removing the past variables, helped the model with the finals predictions and also decreased the noise of the prediction as seen in the non-parametric test Global Deviance (GD). Beside, the additive term used, Cubic Splines cs(), didn't bought a better prediction, but set a model less likely to overfitting.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Fitted values of the parameters of the object can be obtained using the fitted() function.
+For example plot(x, fitted(abd1,"mu")) will plot the fitted values of mu against x.
+
+```{r}
+plot(idx_OIL, fitted(mod_1,"mu"))
+```
+
+The constant estimated scale parameter (the standard deviation of the normal in this case) can be obtained using:
+
+
+```{r}
+fitted(mod_1,"sigma")[1]
+```
+
+To obtain the generalized Akaike information criterion use the functions AIC() or GAIC().
+
+```{r}
+AIC(mod_1, mod_2, mod_3, mod_4)
+```
+
+The functions AIC and GAIC are identical
+
+```{r}
+GAIC(mod_1, mod_2, mod_3, mod_4)
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+
+
+
+
+
+
+
+
+
+
 
