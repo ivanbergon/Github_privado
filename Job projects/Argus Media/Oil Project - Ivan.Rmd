@@ -459,7 +459,7 @@ model_3 <-
     formula = OILPRICE ~ cs(BDIY_log, df = 2) + cs(SPX_log, df = 2) + cs(DX1_log, df = 2) + cs(GC1_log, df = 2) +
     cs(USCI_log, df = 2) + cs(GNR_log, df = 2) + cs(SHCOMP_log, df = 2) + cs(FTSE_log, df = 2) + cs(respLAG, df = 2) ,
     family = BCPE,
-    data = train_df, control = gamlss.control(n.cyc = 200)
+    data = train_df, control = gamlss.control(n.cyc = 400)
   )
 
 # model 4
@@ -473,7 +473,7 @@ model_4 <-
       cs(BDIY_log, df = 2) + cs(SPX_log, df = 2) + cs(DX1_log, df = 2) + cs(GC1_log, df = 2) +
       cs(USCI_log, df = 2) + cs(GNR_log, df = 2) + cs(SHCOMP_log, df = 2) + cs(FTSE_log, df = 2) + cs(respLAG, df = 2) ,
     family = BCPE,
-    data = train_oil, control = gamlss.control(n.cyc = 200)
+    data = train_oil, control = gamlss.control(n.cyc = 400)
   )
 ```
 
@@ -541,9 +541,9 @@ Here it is important to visualize if the predictions keep in the range of 2% dev
 
 ```{r}
 par(mfrow=c(2,2))
-hist(100*testset_DF$pred.deviation_1, main="Prediction 1 deviation interval", xlab = "Deviation percentage", labels = T, xlim =c(-0.5,0.5), ylim = c(0,150))
-hist(100*testset_OIL$pred.deviation_2, main="Prediction 2 deviation interval", xlab = "Deviation percentage", labels = T, xlim =c(-0.5,0.5), ylim = c(0,150))
-hist(100*testset_DF$pred.deviation_3, main="Prediction 3 deviation interval", xlab = "Deviation percentage", labels = T, xlim =c(-0.5,0.5), ylim = c(0,150))
+hist(100*test_df$pred.deviation_1, main="Prediction 1 deviation interval", xlab = "Deviation percentage", labels = T, xlim =c(-0.5,0.5), ylim = c(0,150))
+hist(100*test_oil$pred.deviation_2, main="Prediction 2 deviation interval", xlab = "Deviation percentage", labels = T, xlim =c(-0.5,0.5), ylim = c(0,150))
+hist(100*test_df$pred.deviation_3, main="Prediction 3 deviation interval", xlab = "Deviation percentage", labels = T, xlim =c(-0.5,0.5), ylim = c(0,150))
 hist(100*testset_OIL$pred.deviation_4, main="Prediction 4 deviation interval", xlab = "Deviation percentage", labels = T, xlim =c(-0.5,0.5), ylim = c(0,150))
 ```
 
@@ -560,10 +560,10 @@ The df dataset shows better results.
 ### RESIDUALS VISUALIZATION
 
 ```{r}
-plot(mod_1)
-plot(mod_2)
-plot(mod_3)
-plot(mod_4)
+plot(model_1)
+plot(model_2)
+plot(model_3)
+plot(model_4)
 ```
 
 (*)
@@ -575,10 +575,10 @@ WORM PLOT
 # Plotting residuals
 
 par(mfrow=c(2,2))
-wp(mod_1)
-wp(mod_2)
-wp(mod_3)
-wp(mod_4)
+wp(model_1)
+wp(model_2)
+wp(model_3)
+wp(model_4)
 ```
 
 (*)
@@ -590,9 +590,9 @@ NON PARAMETRIC TESTS
 ```{r}
 # Getting each model's non parametric test
 
-GD = c(mod_1$G.deviance,mod_2$G.deviance,mod_3$G.deviance,mod_4$G.deviance)#Deviation
-AIC = c(mod_1$aic,mod_2$aic,mod_3$aic,mod_4$aic)# Overfitting
-SBC = c(mod_1$sbc,mod_3$sbc,mod_4$sbc,mod_4$sbc)# Overfitting
+GD = c(model_1$G.deviance,model_2$G.deviance,model_3$G.deviance,model_4$G.deviance)#Deviation
+AIC = c(model_1$aic,model_2$aic,model_3$aic,model_4$aic)# Overfitting
+SBC = c(model_1$sbc,model_3$sbc,model_4$sbc,model_4$sbc)# Overfitting
 
 GD # First Line
 AIC # Second line
@@ -639,24 +639,24 @@ Fitted values of the parameters of the object can be obtained using the fitted()
 For example plot(x, fitted(abd1,"mu")) will plot the fitted values of mu against x.
 
 ```{r}
-plot(idx_OIL, fitted(mod_1,"mu"))
+plot(idx_OIL, fitted(model_1,"mu"))
 ```
 
 The constant estimated scale parameter (the standard deviation of the normal in this case) can be obtained using:
 
 
 ```{r}
-fitted(mod_1,"sigma")[1]
+fitted(model_1,"sigma")[1]
 ```
 
 To obtain the generalized Akaike information criterion use the functions AIC() or GAIC().
 
 ```{r}
-AIC(mod_1, mod_2, mod_3, mod_4)
+AIC(model_1, model_2, model_3, model_4)
 ```
 
 The functions AIC and GAIC are identical
 
 ```{r}
-GAIC(mod_1, mod_2, mod_3, mod_4)
+GAIC(model_1, model_2, model_3, model_4)
 ```
