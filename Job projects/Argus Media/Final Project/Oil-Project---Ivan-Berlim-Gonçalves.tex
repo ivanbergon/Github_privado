@@ -1,0 +1,1607 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\author{}
+\date{\vspace{-2.5em}}
+
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+
+\begin{document}
+
+\hypertarget{argus-media---oil-dataset-project}{%
+\section{Argus Media - Oil Dataset
+Project}\label{argus-media---oil-dataset-project}}
+
+\hypertarget{ivan-berlim-gonuxe7alves}{%
+\subsection{Ivan Berlim Gonçalves}\label{ivan-berlim-gonuxe7alves}}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{business-problem}{%
+\subsubsection{1 - BUSINESS PROBLEM}\label{business-problem}}
+
+We want to predict the \texttt{OILPRICE} values given the oil dataset
+from GAMLSS package.
+
+The price of oil and other commodities is influenced by three major
+factors: supply, demand and geopolitics. But what if we could indirectly
+predict its price using other commodities and stock indexes? This is the
+proposed challenge that we are going to solve. We are going to make a
+superficial scratch on the complex world of natural resource pricing.
+
+Great! We already have our problem question:
+
+\begin{itemize}
+\tightlist
+\item
+  What will be the tomorrow's oil price?
+\end{itemize}
+
+Now let us establish some tangible objectives to what we want as an
+answer. Given that the stock market is a complex, volatile and fast
+environment, we must set a goal for assessing the model's metrics. A
+variation of 2\% in price prediction could mean a lot of wasted money
+depending on the amount applied. So we are going to set two high
+standards goals for our model performance:
+
+\begin{itemize}
+\tightlist
+\item
+  at least 90\% of the predictions have to be on a 1\% deviance margin
+  from the real values.
+\item
+  at least 75\% of the predictions have to be on a 0.5\% deviance margin
+  from the real values.
+\end{itemize}
+
+We are ready to start. It's time to understand the data.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{understanding-the-data}{%
+\subsubsection{2 - UNDERSTANDING THE
+DATA}\label{understanding-the-data}}
+
+\hypertarget{what-is-gamlss}{%
+\paragraph{What is GAMLSS?}\label{what-is-gamlss}}
+
+Generalized Additive Models for Location, Scale and Shape (GAMLSS) were
+introduced by Rigby and Stasinopoulos (2001, 2005) and Akantziliotou et
+al.~(2002) as a way of overcoming some of the limitations associated
+with Generalized Linear Models (GLM) and Generalized Additive Models
+(GAM) (Nelder and Wedderburn, 1972 and Hastie and Tibshirani, 1990,
+respectively).
+
+In GAMLSS the exponential family distribution assumption for the
+response variable (Y) is relaxed and replaced by a general distribution
+family, including highly skew and/or kurtotic distributions. The
+systematic part of the model is expanded to allow modeling not only the
+mean (or location) but other parameters of the distribution of Y as
+linear parametric and/or additive non-parametric functions of
+explanatory variables and/or random effects. Maximum (penalized)
+likelihood estimation is used to fit the models.
+
+There are two algorithms to fit the models, the CG and RS algorithms.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{gamlss-guide-used-to-this-project}{%
+\paragraph{GAMLSS guide used to this
+project:}\label{gamlss-guide-used-to-this-project}}
+
+\url{http://www.gamlss.com/wp-content/uploads/2013/01/gamlss-manual.pdf}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{dataset-information}{%
+\paragraph{Dataset Information:}\label{dataset-information}}
+
+Link: \url{https://rdrr.io/cran/gamlss.data/man/oil.html}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{dataset-description}{%
+\paragraph{Dataset Description}\label{dataset-description}}
+
+The Oil data: Using model selection to discover what affects the price
+of oil. The data s contains the daily prices of front-month WTI (West
+Texas Intermediate) oil prices traded by NYMEX (New York Mercantile
+Exchange). The front-month WTI oil price is a futures contract with the
+shortest duration that could be purchased in the NYMEX market. The idea
+is to use other financially traded products (e.g., gold price) to
+discover what might affect the daily dynamics of the price of oil.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{dataset-source}{%
+\paragraph{Dataset Source}\label{dataset-source}}
+
+The dataset was downloaded from \url{https://www.quandl.com/}.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{dataset-format}{%
+\paragraph{Dataset Format}\label{dataset-format}}
+
+\hypertarget{oilprice}{%
+\subparagraph{OILPRICE}\label{oilprice}}
+
+the log price of front month WTI oil contract traded by NYMEX - in
+financial terms, this is the CL1. This is the response variable.
+
+\hypertarget{cl_log}{%
+\subparagraph{CL\_log}\label{cl_log}}
+
+numeric vectors which are the log prices of the 2 to 15 months ahead WTI
+oil contracts traded by NYMEX. For example, for the trading day of 2nd
+June 2016, the CL2 is the WTI oil contract for delivery in August 2016.
+
+\hypertarget{bdiy_log}{%
+\subparagraph{BDIY\_log}\label{bdiy_log}}
+
+the Baltic Dry Index, which is an assessment of the price of moving the
+major raw materials by sea.
+
+\hypertarget{spx_log}{%
+\subparagraph{SPX\_log}\label{spx_log}}
+
+the S\&P 500 index
+
+\hypertarget{dx1_log}{%
+\subparagraph{DX1\_log}\label{dx1_log}}
+
+the US Dollar Index
+
+\hypertarget{gc1_log}{%
+\subparagraph{GC1\_log}\label{gc1_log}}
+
+The log price of front month gold price contract traded by NYMEX
+
+\hypertarget{ho1_log}{%
+\subparagraph{HO1\_log}\label{ho1_log}}
+
+the log price of front month heating oil contract traded by NYMEX
+
+\hypertarget{usci_log}{%
+\subparagraph{USCI\_log}\label{usci_log}}
+
+the United States Commodity Index
+
+\hypertarget{gnr_log}{%
+\subparagraph{GNR\_log}\label{gnr_log}}
+
+the S\&P Global Natural Resources Index
+
+\hypertarget{shcomp_log}{%
+\subparagraph{SHCOMP\_log}\label{shcomp_log}}
+
+the Shanghai Stock Exchange Composite Index.
+
+\hypertarget{ftse_log}{%
+\subparagraph{FTSE\_log}\label{ftse_log}}
+
+the FTSE 100 Index
+
+\hypertarget{resplag}{%
+\subparagraph{respLAG}\label{resplag}}
+
+the lag 1 of OILPRICE - lagged version of the response variable.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{data-preparation}{%
+\subsubsection{3 - DATA PREPARATION}\label{data-preparation}}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{packages-and-libraries}{%
+\paragraph{PACKAGES and LIBRARIES}\label{packages-and-libraries}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Verify if the package is already installed, if not, install package}
+\ControlFlowTok{if}\NormalTok{(}\StringTok{"ggplot2"} \SpecialCharTok{\%in\%} \FunctionTok{rownames}\NormalTok{(}\FunctionTok{installed.packages}\NormalTok{()) }\SpecialCharTok{==} \ConstantTok{FALSE}\NormalTok{) \{}\FunctionTok{install.packages}\NormalTok{(}\StringTok{"ggplot2"}\NormalTok{)\}}
+\ControlFlowTok{if}\NormalTok{(}\StringTok{"ggpubr"} \SpecialCharTok{\%in\%} \FunctionTok{rownames}\NormalTok{(}\FunctionTok{installed.packages}\NormalTok{()) }\SpecialCharTok{==} \ConstantTok{FALSE}\NormalTok{) \{}\FunctionTok{install.packages}\NormalTok{(}\StringTok{"ggpubr"}\NormalTok{)\}}
+\ControlFlowTok{if}\NormalTok{(}\StringTok{"tidyverse"} \SpecialCharTok{\%in\%} \FunctionTok{rownames}\NormalTok{(}\FunctionTok{installed.packages}\NormalTok{()) }\SpecialCharTok{==} \ConstantTok{FALSE}\NormalTok{) \{}\FunctionTok{install.packages}\NormalTok{(}\StringTok{"tidyverse"}\NormalTok{)\}}
+\ControlFlowTok{if}\NormalTok{(}\StringTok{"tidyr"} \SpecialCharTok{\%in\%} \FunctionTok{rownames}\NormalTok{(}\FunctionTok{installed.packages}\NormalTok{()) }\SpecialCharTok{==} \ConstantTok{FALSE}\NormalTok{) \{}\FunctionTok{install.packages}\NormalTok{(}\StringTok{"tidyr"}\NormalTok{)\}}
+\ControlFlowTok{if}\NormalTok{(}\StringTok{"gridExtra"} \SpecialCharTok{\%in\%} \FunctionTok{rownames}\NormalTok{(}\FunctionTok{installed.packages}\NormalTok{()) }\SpecialCharTok{==} \ConstantTok{FALSE}\NormalTok{) \{}\FunctionTok{install.packages}\NormalTok{(}\StringTok{"gridExtra"}\NormalTok{)\}}
+\ControlFlowTok{if}\NormalTok{(}\StringTok{"gamlss"} \SpecialCharTok{\%in\%} \FunctionTok{rownames}\NormalTok{(}\FunctionTok{installed.packages}\NormalTok{()) }\SpecialCharTok{==} \ConstantTok{FALSE}\NormalTok{) \{}\FunctionTok{install.packages}\NormalTok{(}\StringTok{"gamlss"}\NormalTok{)\}}
+\ControlFlowTok{if}\NormalTok{(}\StringTok{"gamlss.add"} \SpecialCharTok{\%in\%} \FunctionTok{rownames}\NormalTok{(}\FunctionTok{installed.packages}\NormalTok{()) }\SpecialCharTok{==} \ConstantTok{FALSE}\NormalTok{) \{}\FunctionTok{install.packages}\NormalTok{(}\StringTok{"gamlss.add"}\NormalTok{)\}}
+\ControlFlowTok{if}\NormalTok{(}\StringTok{"gamlss.dist"} \SpecialCharTok{\%in\%} \FunctionTok{rownames}\NormalTok{(}\FunctionTok{installed.packages}\NormalTok{()) }\SpecialCharTok{==} \ConstantTok{FALSE}\NormalTok{) \{}\FunctionTok{install.packages}\NormalTok{(}\StringTok{"gamlss.dist"}\NormalTok{)\}}
+\ControlFlowTok{if}\NormalTok{(}\StringTok{"corrplot"} \SpecialCharTok{\%in\%} \FunctionTok{rownames}\NormalTok{(}\FunctionTok{installed.packages}\NormalTok{()) }\SpecialCharTok{==} \ConstantTok{FALSE}\NormalTok{) \{}\FunctionTok{install.packages}\NormalTok{(}\StringTok{"corrplot"}\NormalTok{)\}}
+\ControlFlowTok{if}\NormalTok{(}\StringTok{"gamlss.dist"} \SpecialCharTok{\%in\%} \FunctionTok{rownames}\NormalTok{(}\FunctionTok{installed.packages}\NormalTok{()) }\SpecialCharTok{==} \ConstantTok{FALSE}\NormalTok{) \{}\FunctionTok{install.packages}\NormalTok{(}\StringTok{"gamlss.dist"}\NormalTok{)\}}
+\ControlFlowTok{if}\NormalTok{(}\StringTok{"Hmisc"} \SpecialCharTok{\%in\%} \FunctionTok{rownames}\NormalTok{(}\FunctionTok{installed.packages}\NormalTok{()) }\SpecialCharTok{==} \ConstantTok{FALSE}\NormalTok{) \{}\FunctionTok{install.packages}\NormalTok{(}\StringTok{"Hmisc"}\NormalTok{)\}}
+
+\CommentTok{\# Loading libraries}
+\FunctionTok{library}\NormalTok{(gamlss)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Carregando pacotes exigidos: splines
+\end{verbatim}
+
+\begin{verbatim}
+## Carregando pacotes exigidos: gamlss.data
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Attaching package: 'gamlss.data'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:datasets':
+## 
+##     sleep
+\end{verbatim}
+
+\begin{verbatim}
+## Carregando pacotes exigidos: gamlss.dist
+\end{verbatim}
+
+\begin{verbatim}
+## Carregando pacotes exigidos: MASS
+\end{verbatim}
+
+\begin{verbatim}
+## Carregando pacotes exigidos: nlme
+\end{verbatim}
+
+\begin{verbatim}
+## Carregando pacotes exigidos: parallel
+\end{verbatim}
+
+\begin{verbatim}
+##  **********   GAMLSS Version 5.3-4  **********
+\end{verbatim}
+
+\begin{verbatim}
+## For more on GAMLSS look at https://www.gamlss.com/
+\end{verbatim}
+
+\begin{verbatim}
+## Type gamlssNews() to see new features/changes/bug fixes.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(ggpubr)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Carregando pacotes exigidos: ggplot2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(gamlss.add)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Carregando pacotes exigidos: mgcv
+\end{verbatim}
+
+\begin{verbatim}
+## This is mgcv 1.8-36. For overview type 'help("mgcv-package")'.
+\end{verbatim}
+
+\begin{verbatim}
+## Carregando pacotes exigidos: nnet
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Attaching package: 'nnet'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:mgcv':
+## 
+##     multinom
+\end{verbatim}
+
+\begin{verbatim}
+## Carregando pacotes exigidos: rpart
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(gamlss.dist)}
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\FunctionTok{library}\NormalTok{(corrplot)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## corrplot 0.90 loaded
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(cowplot)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attaching package: 'cowplot'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:ggpubr':
+## 
+##     get_legend
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(Hmisc)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Carregando pacotes exigidos: lattice
+\end{verbatim}
+
+\begin{verbatim}
+## Carregando pacotes exigidos: survival
+\end{verbatim}
+
+\begin{verbatim}
+## Carregando pacotes exigidos: Formula
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Attaching package: 'Hmisc'
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:base':
+## 
+##     format.pval, units
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(gridExtra)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+Extract the GAMLSS Oil dataset as \texttt{oil} data frame:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# extrack the \textquotesingle{}oil\textquotesingle{} data}
+\FunctionTok{data}\NormalTok{(oil)}
+
+\CommentTok{\# set random seed to create a reproducible script}
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{18}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{exploratory-analysis}{%
+\subsubsection{4 - EXPLORATORY ANALYSIS}\label{exploratory-analysis}}
+
+We want to understand how the data is organized in the data frame:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Head function to see the \textquotesingle{}oil\textquotesingle{} data frame}
+\FunctionTok{head}\NormalTok{(oil)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   OILPRICE  CL2_log  CL3_log  CL4_log  CL5_log  CL6_log  CL7_log  CL8_log
+## 1 4.640923 4.636475 4.641116 4.644968 4.648038 4.649761 4.650908 4.651863
+## 2 4.633077 4.645352 4.649857 4.653484 4.656338 4.657858 4.658711 4.659564
+## 3 4.634049 4.637831 4.642466 4.646312 4.649665 4.651672 4.653103 4.654341
+## 4 4.646312 4.638315 4.642562 4.646120 4.648708 4.649952 4.650621 4.651099
+## 5 4.631520 4.650526 4.654722 4.658047 4.660321 4.661267 4.661740 4.662117
+## 6 4.627616 4.635893 4.640344 4.644199 4.646984 4.648421 4.649378 4.650335
+##    CL9_log CL10_log CL11_log CL12_log CL13_log CL14_log CL15_log BDIY_log
+## 1 4.652340 4.651672 4.650621 4.648613 4.646120 4.643236 4.639765 6.850126
+## 2 4.660037 4.659374 4.657952 4.655578 4.652531 4.649187 4.645256 6.850126
+## 3 4.655293 4.655007 4.653865 4.651672 4.648804 4.645736 4.642081 6.879356
+## 4 4.651577 4.651004 4.649570 4.647080 4.644102 4.640923 4.636960 6.882437
+## 5 4.662401 4.661645 4.659942 4.656908 4.653484 4.649761 4.645544 6.896694
+## 6 4.651099 4.650813 4.649570 4.646984 4.643910 4.640537 4.636475 6.913737
+##    SPX_log  DX1_log  GC1_log  HO1_log USCI_log  GNR_log SHCOMP_log FTSE_log
+## 1 7.221624 4.386554 7.413367 1.136197 4.108412 3.917806   7.744539 8.636699
+## 2 7.235309 4.379762 7.419680 1.152564 4.120986 3.942552   7.762536 8.650062
+## 3 7.222756 4.387449 7.418481 1.155182 4.115127 3.923952   7.766061 8.639729
+## 4 7.222252 4.383675 7.410347 1.136743 4.103965 3.925531   7.765158 8.642292
+## 5 7.237620 4.382364 7.399704 1.139946 4.107096 3.941970   7.755763 8.659907
+## 6 7.233556 4.382951 7.404888 1.137256 4.097672 3.936325   7.775213 8.656137
+##    respLAG
+## 1 4.631812
+## 2 4.640923
+## 3 4.633077
+## 4 4.634049
+## 5 4.646312
+## 6 4.631520
+\end{verbatim}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+Let's see how many rows (observations) and columns (variables) there are
+in the \texttt{oil} data frame:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{paste0}\NormalTok{(}\StringTok{"The }\SpecialCharTok{\textbackslash{}\textquotesingle{}}\StringTok{oil}\SpecialCharTok{\textbackslash{}\textquotesingle{}}\StringTok{ data frame has "}\NormalTok{, }\FunctionTok{nrow}\NormalTok{(oil), }\StringTok{" observations and  "}\NormalTok{, }\FunctionTok{ncol}\NormalTok{(oil), }\StringTok{" variables. "}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "The 'oil' data frame has 1000 observations and  25 variables. "
+\end{verbatim}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+Now we want to know what are the variables' names in the \texttt{oil}
+data frame. They correspond to the descriptions in the
+\texttt{Dataset\ Format} section at the description of this project.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# columns names (oil)}
+\NormalTok{oil\_col\_names }\OtherTok{\textless{}{-}} \FunctionTok{colnames}\NormalTok{(oil)}
+\FunctionTok{cat}\NormalTok{(}\StringTok{\textquotesingle{}Variables in the }\SpecialCharTok{\textbackslash{}\textquotesingle{}}\StringTok{oil}\SpecialCharTok{\textbackslash{}\textquotesingle{}}\StringTok{ data frame: }\SpecialCharTok{\textbackslash{}n\textbackslash{}n}\StringTok{\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Variables in the 'oil' data frame:
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in}\NormalTok{ (}\DecValTok{1}\SpecialCharTok{:}\FunctionTok{ncol}\NormalTok{(oil))) \{}\FunctionTok{print}\NormalTok{(}\FunctionTok{paste0}\NormalTok{(}\StringTok{"Column number: "}\NormalTok{,i, }\StringTok{". Variable name: "}\NormalTok{, oil\_col\_names[i]))\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Column number: 1. Variable name: OILPRICE"
+## [1] "Column number: 2. Variable name: CL2_log"
+## [1] "Column number: 3. Variable name: CL3_log"
+## [1] "Column number: 4. Variable name: CL4_log"
+## [1] "Column number: 5. Variable name: CL5_log"
+## [1] "Column number: 6. Variable name: CL6_log"
+## [1] "Column number: 7. Variable name: CL7_log"
+## [1] "Column number: 8. Variable name: CL8_log"
+## [1] "Column number: 9. Variable name: CL9_log"
+## [1] "Column number: 10. Variable name: CL10_log"
+## [1] "Column number: 11. Variable name: CL11_log"
+## [1] "Column number: 12. Variable name: CL12_log"
+## [1] "Column number: 13. Variable name: CL13_log"
+## [1] "Column number: 14. Variable name: CL14_log"
+## [1] "Column number: 15. Variable name: CL15_log"
+## [1] "Column number: 16. Variable name: BDIY_log"
+## [1] "Column number: 17. Variable name: SPX_log"
+## [1] "Column number: 18. Variable name: DX1_log"
+## [1] "Column number: 19. Variable name: GC1_log"
+## [1] "Column number: 20. Variable name: HO1_log"
+## [1] "Column number: 21. Variable name: USCI_log"
+## [1] "Column number: 22. Variable name: GNR_log"
+## [1] "Column number: 23. Variable name: SHCOMP_log"
+## [1] "Column number: 24. Variable name: FTSE_log"
+## [1] "Column number: 25. Variable name: respLAG"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# paste0("Variable name: ", col\_names)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 0\tabcolsep) * \real{1.00}}@{}}
+\toprule
+\endhead
+Checking if there are any null values in the \texttt{oil} data frame: \\
+\texttt{r\ is.null(oil)} \\
+\texttt{\#\#\ {[}1{]}\ FALSE} \\
+\texttt{r\ sum(is.na(oil))} \\
+\texttt{\#\#\ {[}1{]}\ 0} \\
+Great! There is no null value in the \texttt{oil} data frame \\
+\bottomrule
+\end{longtable}
+
+It is time to create a data frame called \texttt{df} that contains all
+\texttt{oil} data frame variables except the log prices of the 2 to 15
+months ahead WTI oil contracts traded by NYMEX, the so-called
+\texttt{CL\#\_log} variables.
+
+Our new \texttt{df} data frame holds only the commodities and stocks
+indexes, the predictor variable \texttt{OILPRICE}, and its lagged
+version, the \texttt{respLAG} variable.
+
+The idea is to remove unnecessary columns that may add noise to our
+data:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Creating a new data frame called \textquotesingle{}df\textquotesingle{} without the past contracts information.}
+
+\CommentTok{\# According to the number of columns and their names in \textquotesingle{}oil\_col\_names\textquotesingle{}, lets}
+\CommentTok{\# remove the columns 2 to 15 representing the \textquotesingle{}CL\#\_log\textquotesingle{}s variables}
+\NormalTok{df }\OtherTok{=}\NormalTok{ oil[,}\SpecialCharTok{{-}}\DecValTok{2}\SpecialCharTok{:{-}}\DecValTok{15}\NormalTok{]}
+\FunctionTok{head}\NormalTok{(df)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   OILPRICE BDIY_log  SPX_log  DX1_log  GC1_log  HO1_log USCI_log  GNR_log
+## 1 4.640923 6.850126 7.221624 4.386554 7.413367 1.136197 4.108412 3.917806
+## 2 4.633077 6.850126 7.235309 4.379762 7.419680 1.152564 4.120986 3.942552
+## 3 4.634049 6.879356 7.222756 4.387449 7.418481 1.155182 4.115127 3.923952
+## 4 4.646312 6.882437 7.222252 4.383675 7.410347 1.136743 4.103965 3.925531
+## 5 4.631520 6.896694 7.237620 4.382364 7.399704 1.139946 4.107096 3.941970
+## 6 4.627616 6.913737 7.233556 4.382951 7.404888 1.137256 4.097672 3.936325
+##   SHCOMP_log FTSE_log  respLAG
+## 1   7.744539 8.636699 4.631812
+## 2   7.762536 8.650062 4.640923
+## 3   7.766061 8.639729 4.633077
+## 4   7.765158 8.642292 4.634049
+## 5   7.755763 8.659907 4.646312
+## 6   7.775213 8.656137 4.631520
+\end{verbatim}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+Getting the number of rows (observations) and columns (variables) there
+are in the \texttt{df} data frame:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{paste0}\NormalTok{(}\StringTok{"The \textquotesingle{}df\textquotesingle{} data frame has "}\NormalTok{, }\FunctionTok{nrow}\NormalTok{(df), }\StringTok{" observations and  "}\NormalTok{, }\FunctionTok{ncol}\NormalTok{(df), }\StringTok{" variables. "}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "The 'df' data frame has 1000 observations and  11 variables. "
+\end{verbatim}
+
+`df' data frame column names:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# columns names (df)}
+\NormalTok{df\_col\_names }\OtherTok{\textless{}{-}} \FunctionTok{colnames}\NormalTok{(df)}
+\FunctionTok{cat}\NormalTok{(}\StringTok{\textquotesingle{}Variables in the }\SpecialCharTok{\textbackslash{}\textquotesingle{}}\StringTok{df}\SpecialCharTok{\textbackslash{}\textquotesingle{}}\StringTok{ data frame: }\SpecialCharTok{\textbackslash{}n\textbackslash{}n}\StringTok{\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Variables in the 'df' data frame:
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in}\NormalTok{ (}\DecValTok{1}\SpecialCharTok{:}\FunctionTok{ncol}\NormalTok{(df))) \{}\FunctionTok{print}\NormalTok{(}\FunctionTok{paste0}\NormalTok{(}\StringTok{"Column number: "}\NormalTok{,i, }\StringTok{". Variable name: "}\NormalTok{, df\_col\_names[i]))\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Column number: 1. Variable name: OILPRICE"
+## [1] "Column number: 2. Variable name: BDIY_log"
+## [1] "Column number: 3. Variable name: SPX_log"
+## [1] "Column number: 4. Variable name: DX1_log"
+## [1] "Column number: 5. Variable name: GC1_log"
+## [1] "Column number: 6. Variable name: HO1_log"
+## [1] "Column number: 7. Variable name: USCI_log"
+## [1] "Column number: 8. Variable name: GNR_log"
+## [1] "Column number: 9. Variable name: SHCOMP_log"
+## [1] "Column number: 10. Variable name: FTSE_log"
+## [1] "Column number: 11. Variable name: respLAG"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# paste0("Variable name: ", col\_names)}
+\end{Highlighting}
+\end{Shaded}
+
+Printing a statistic summary to overview the \texttt{df} features
+values:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Let us see some basic statistics of our new \textquotesingle{}df\textquotesingle{} data frame}
+\FunctionTok{summary}\NormalTok{(df)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##     OILPRICE        BDIY_log        SPX_log         DX1_log     
+##  Min.   :3.266   Min.   :5.670   Min.   :7.153   Min.   :4.369  
+##  1st Qu.:3.966   1st Qu.:6.596   1st Qu.:7.354   1st Qu.:4.391  
+##  Median :4.517   Median :6.806   Median :7.531   Median :4.417  
+##  Mean   :4.309   Mean   :6.787   Mean   :7.481   Mean   :4.459  
+##  3rd Qu.:4.580   3rd Qu.:7.011   3rd Qu.:7.611   3rd Qu.:4.557  
+##  Max.   :4.705   Max.   :7.757   Max.   :7.664   Max.   :4.613  
+##     GC1_log         HO1_log           USCI_log        GNR_log     
+##  Min.   :6.956   Min.   :-0.1442   Min.   :3.650   Min.   :3.317  
+##  1st Qu.:7.089   1st Qu.: 0.6220   1st Qu.:3.838   1st Qu.:3.787  
+##  Median :7.159   Median : 1.0547   Median :4.021   Median :3.868  
+##  Mean   :7.192   Mean   : 0.8600   Mean   :3.962   Mean   :3.818  
+##  3rd Qu.:7.345   3rd Qu.: 1.1013   3rd Qu.:4.070   3rd Qu.:3.920  
+##  Max.   :7.491   Max.   : 1.1877   Max.   :4.148   Max.   :3.985  
+##    SHCOMP_log       FTSE_log        respLAG     
+##  Min.   :7.576   Min.   :8.568   Min.   :3.266  
+##  1st Qu.:7.652   1st Qu.:8.716   1st Qu.:3.966  
+##  Median :7.734   Median :8.778   Median :4.517  
+##  Mean   :7.840   Mean   :8.760   Mean   :4.310  
+##  3rd Qu.:8.032   3rd Qu.:8.813   3rd Qu.:4.580  
+##  Max.   :8.550   Max.   :8.868   Max.   :4.705
+\end{verbatim}
+
+It seems we don't have any outliers or any missing inputs values in
+\texttt{df}. Let's continue our exploratory analysis.
+
+\hypertarget{plotting-oilprice-relation-with-other-variables}{%
+\paragraph{\texorpdfstring{Plotting \texttt{OILPRICE} relation with
+other
+variables}{Plotting OILPRICE relation with other variables}}\label{plotting-oilprice-relation-with-other-variables}}
+
+To create a strategy that can solve our problem, we need to understand
+the relationship between Y and X's, the relation between the predictor
+variable and the response variables. For that will can use a scatter
+plot to make the relation graphically explicit:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p1 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(df, }\FunctionTok{aes}\NormalTok{(SPX\_log, OILPRICE)) }\SpecialCharTok{+} \FunctionTok{geom\_point}\NormalTok{()}
+\NormalTok{p2 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(df, }\FunctionTok{aes}\NormalTok{(DX1\_log, OILPRICE)) }\SpecialCharTok{+}  \FunctionTok{geom\_point}\NormalTok{()}
+\NormalTok{p3 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(df, }\FunctionTok{aes}\NormalTok{(BDIY\_log, OILPRICE)) }\SpecialCharTok{+}  \FunctionTok{geom\_point}\NormalTok{()}
+\NormalTok{p4 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(df, }\FunctionTok{aes}\NormalTok{(GC1\_log, OILPRICE)) }\SpecialCharTok{+}  \FunctionTok{geom\_point}\NormalTok{()}
+\NormalTok{p5 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(df, }\FunctionTok{aes}\NormalTok{(HO1\_log, OILPRICE)) }\SpecialCharTok{+}  \FunctionTok{geom\_point}\NormalTok{()}
+\NormalTok{p6 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(df, }\FunctionTok{aes}\NormalTok{(FTSE\_log, OILPRICE)) }\SpecialCharTok{+}  \FunctionTok{geom\_point}\NormalTok{()}
+\NormalTok{p7 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(df, }\FunctionTok{aes}\NormalTok{(USCI\_log, OILPRICE)) }\SpecialCharTok{+}  \FunctionTok{geom\_point}\NormalTok{()}
+\NormalTok{p8 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(df, }\FunctionTok{aes}\NormalTok{(GNR\_log, OILPRICE)) }\SpecialCharTok{+}  \FunctionTok{geom\_point}\NormalTok{()}
+\NormalTok{p9 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(df, }\FunctionTok{aes}\NormalTok{(SHCOMP\_log, OILPRICE)) }\SpecialCharTok{+}  \FunctionTok{geom\_point}\NormalTok{()}
+
+\NormalTok{plot\_list }\OtherTok{=} \FunctionTok{list}\NormalTok{(p1, p2, p3, p4, p5, p6, p7, p8, p9)}
+
+\FunctionTok{plot\_grid}\NormalTok{(}\AttributeTok{plotlist =}\NormalTok{ plot\_list,}
+          \AttributeTok{labels =} \FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}A\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}B\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}C\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}D\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}E\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}F\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}G\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}H\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}I\textquotesingle{}}\NormalTok{),}
+          \AttributeTok{label\_x =} \FloatTok{0.01}\NormalTok{,}
+          \AttributeTok{label\_y =} \FloatTok{0.87}\NormalTok{,}
+          \AttributeTok{hjust =} \SpecialCharTok{{-}}\FloatTok{0.5}\NormalTok{,}
+          \AttributeTok{vjust =} \SpecialCharTok{{-}}\FloatTok{0.5}\NormalTok{,}
+          \AttributeTok{label\_fontfamily =} \StringTok{"serif"}\NormalTok{,}
+          \AttributeTok{label\_fontface =} \StringTok{"plain"}\NormalTok{,}
+          \AttributeTok{label\_colour =} \StringTok{"blue"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Oil-Project---Ivan-Berlim-Gonçalves_files/figure-latex/unnamed-chunk-11-1.pdf}
+
+The scatter plot above shows different relations between the dependent
+(Y) and independent (X's) variables:
+
+\begin{longtable}[]{@{}lll@{}}
+\toprule
+Graph Label & Variable & Correlation \\
+\midrule
+\endhead
+A & SPX\_log & Unknown Correlation \\
+B & DX1\_log & Negative Linear Correlation \\
+B & BDIY\_log & Positive Linear Correlation \\
+D & GC1\_log & Unknown Correlation \\
+E & HO1\_log & Positive Linear Correlation \\
+F & FTSE\_log & Unknown Correlation \\
+G & USCI\_log & Positive Linear Correlation \\
+H & GNR\_log & Positive Linear Correlation \\
+I & SHCOMP\_log & Unknown Correlation \\
+\bottomrule
+\end{longtable}
+
+In general, we expect to see a linear response from the variables
+`DX1\_log', `HO1\_log', `USCI\_log' and `GNR\_log' and maybe a
+non-linear correlation from `SPX\_log', `GC1\_log', `FTSE\_log' and
+`SHCOMP\_log'.
+
+We'll have to find more about the variables to select the best
+treatment.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{variables-distribution}{%
+\paragraph{Variables Distribution}\label{variables-distribution}}
+
+To select the best suitable correlation test and to better interpret
+what the results mean, we have to know the variables' values
+distribution.
+
+For this, we will plot a series of histograms to visualize their
+distribution and finally be able to select a proper correlation method
+to ensure good results when modeling.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Making the objects in the \textquotesingle{}df\textquotesingle{} data frame searchable}
+\FunctionTok{attach}\NormalTok{(df)}
+
+\CommentTok{\# Selecting plot\textquotesingle{}s parameters}
+\NormalTok{color1 }\OtherTok{\textless{}{-}} \StringTok{\textquotesingle{}black\textquotesingle{}}
+\NormalTok{fill1 }\OtherTok{\textless{}{-}} \StringTok{\textquotesingle{}white\textquotesingle{}}
+\NormalTok{alp }\OtherTok{\textless{}{-}}\NormalTok{ .}\DecValTok{2}
+\NormalTok{fill2 }\OtherTok{\textless{}{-}} \StringTok{"\#FF6666"}
+\NormalTok{x\_inter }\OtherTok{=} \FunctionTok{mean}\NormalTok{(OILPRICE) }
+\NormalTok{color2 }\OtherTok{\textless{}{-}} \StringTok{\textquotesingle{}blue\textquotesingle{}}
+\NormalTok{lt }\OtherTok{\textless{}{-}} \StringTok{\textquotesingle{}dashed\textquotesingle{}}
+\NormalTok{sz }\OtherTok{\textless{}{-}} \DecValTok{1}
+
+\CommentTok{\# Plotting}
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow=}\FunctionTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{,}\DecValTok{4}\NormalTok{))}
+
+\NormalTok{h1 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(df, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{OILPRICE))}\SpecialCharTok{+} \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Oil Price"}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{geom\_histogram}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{y=}\NormalTok{..density..), }\AttributeTok{colour=}\NormalTok{color1, }\AttributeTok{fill=}\NormalTok{fill1)}\SpecialCharTok{+}
+  \FunctionTok{geom\_density}\NormalTok{(}\AttributeTok{alpha=}\NormalTok{alp, }\AttributeTok{fill=}\NormalTok{fill2)}\SpecialCharTok{+}
+  \FunctionTok{geom\_vline}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{xintercept=}\FunctionTok{mean}\NormalTok{(OILPRICE)), }\AttributeTok{color=}\NormalTok{color2, }\AttributeTok{linetype=}\NormalTok{lt, }\AttributeTok{size=}\NormalTok{sz)}
+\NormalTok{h2 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(df, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{BDIY\_log))}\SpecialCharTok{+} \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Baltic Dry"}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{geom\_histogram}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{y=}\NormalTok{..density..), }\AttributeTok{colour=}\NormalTok{color1, }\AttributeTok{fill=}\NormalTok{fill1)}\SpecialCharTok{+}
+  \FunctionTok{geom\_density}\NormalTok{(}\AttributeTok{alpha=}\NormalTok{alp, }\AttributeTok{fill=}\NormalTok{fill2)}\SpecialCharTok{+}
+  \FunctionTok{geom\_vline}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{xintercept=}\FunctionTok{mean}\NormalTok{(BDIY\_log)), }\AttributeTok{color=}\NormalTok{color2, }\AttributeTok{linetype=}\NormalTok{lt, }\AttributeTok{size=}\NormalTok{sz)}
+\NormalTok{h3 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(df, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{SPX\_log))}\SpecialCharTok{+} \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"S\&P 500 index"}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{geom\_histogram}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{y=}\NormalTok{..density..), }\AttributeTok{colour=}\NormalTok{color1, }\AttributeTok{fill=}\NormalTok{fill1)}\SpecialCharTok{+}
+  \FunctionTok{geom\_density}\NormalTok{(}\AttributeTok{alpha=}\NormalTok{alp, }\AttributeTok{fill=}\NormalTok{fill2)}\SpecialCharTok{+}
+  \FunctionTok{geom\_vline}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{xintercept=}\FunctionTok{mean}\NormalTok{(SPX\_log)), }\AttributeTok{color=}\NormalTok{color2, }\AttributeTok{linetype=}\NormalTok{lt, }\AttributeTok{size=}\NormalTok{sz)}
+\NormalTok{h4 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(df, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{DX1\_log))}\SpecialCharTok{+} \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"US Dollar Index"}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{geom\_histogram}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{y=}\NormalTok{..density..), }\AttributeTok{colour=}\NormalTok{color1, }\AttributeTok{fill=}\NormalTok{fill1)}\SpecialCharTok{+}
+  \FunctionTok{geom\_density}\NormalTok{(}\AttributeTok{alpha=}\NormalTok{alp, }\AttributeTok{fill=}\NormalTok{fill2)}\SpecialCharTok{+}
+  \FunctionTok{geom\_vline}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{xintercept=}\FunctionTok{mean}\NormalTok{(DX1\_log)), }\AttributeTok{color=}\NormalTok{color2, }\AttributeTok{linetype=}\NormalTok{lt, }\AttributeTok{size=}\NormalTok{sz)}
+\NormalTok{h5 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(df, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{GC1\_log))}\SpecialCharTok{+} \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Gold price contract trades"}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{geom\_histogram}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{y=}\NormalTok{..density..), }\AttributeTok{colour=}\NormalTok{color1, }\AttributeTok{fill=}\NormalTok{fill1)}\SpecialCharTok{+}
+  \FunctionTok{geom\_density}\NormalTok{(}\AttributeTok{alpha=}\NormalTok{alp, }\AttributeTok{fill=}\NormalTok{fill2)}\SpecialCharTok{+}
+  \FunctionTok{geom\_vline}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{xintercept=}\FunctionTok{mean}\NormalTok{(GC1\_log)), }\AttributeTok{color=}\NormalTok{color2, }\AttributeTok{linetype=}\NormalTok{lt, }\AttributeTok{size=}\NormalTok{sz)}
+\NormalTok{h6 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(df, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{HO1\_log))}\SpecialCharTok{+} \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Heating Oil price contract traded"}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{geom\_histogram}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{y=}\NormalTok{..density..), }\AttributeTok{colour=}\NormalTok{color1, }\AttributeTok{fill=}\NormalTok{fill1)}\SpecialCharTok{+}
+  \FunctionTok{geom\_density}\NormalTok{(}\AttributeTok{alpha=}\NormalTok{alp, }\AttributeTok{fill=}\NormalTok{fill2)}\SpecialCharTok{+}
+  \FunctionTok{geom\_vline}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{xintercept=}\FunctionTok{mean}\NormalTok{(HO1\_log)), }\AttributeTok{color=}\NormalTok{color2, }\AttributeTok{linetype=}\NormalTok{lt, }\AttributeTok{size=}\NormalTok{sz)}
+\NormalTok{h7 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(df, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{USCI\_log))}\SpecialCharTok{+} \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"US Commodity Index"}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{geom\_histogram}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{y=}\NormalTok{..density..), }\AttributeTok{colour=}\NormalTok{color1, }\AttributeTok{fill=}\NormalTok{fill1)}\SpecialCharTok{+}
+  \FunctionTok{geom\_density}\NormalTok{(}\AttributeTok{alpha=}\NormalTok{alp, }\AttributeTok{fill=}\NormalTok{fill2)}\SpecialCharTok{+}
+  \FunctionTok{geom\_vline}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{xintercept=}\FunctionTok{mean}\NormalTok{(USCI\_log)), }\AttributeTok{color=}\NormalTok{color2, }\AttributeTok{linetype=}\NormalTok{lt, }\AttributeTok{size=}\NormalTok{sz)}
+\NormalTok{h8 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(df, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{GNR\_log))}\SpecialCharTok{+} \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"S\&P Global Natural Resources Index"}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{geom\_histogram}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{y=}\NormalTok{..density..), }\AttributeTok{colour=}\NormalTok{color1, }\AttributeTok{fill=}\NormalTok{fill1)}\SpecialCharTok{+}
+  \FunctionTok{geom\_density}\NormalTok{(}\AttributeTok{alpha=}\NormalTok{alp, }\AttributeTok{fill=}\NormalTok{fill2)}\SpecialCharTok{+}
+  \FunctionTok{geom\_vline}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{xintercept=}\FunctionTok{mean}\NormalTok{(GNR\_log)), }\AttributeTok{color=}\NormalTok{color2, }\AttributeTok{linetype=}\NormalTok{lt, }\AttributeTok{size=}\NormalTok{sz)}
+\NormalTok{h9 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(df, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{SHCOMP\_log))}\SpecialCharTok{+} \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Shanghai Stock Exchange Composite Index"}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{geom\_histogram}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{y=}\NormalTok{..density..), }\AttributeTok{colour=}\NormalTok{color1, }\AttributeTok{fill=}\NormalTok{fill1)}\SpecialCharTok{+}
+  \FunctionTok{geom\_density}\NormalTok{(}\AttributeTok{alpha=}\NormalTok{alp, }\AttributeTok{fill=}\NormalTok{fill2)}\SpecialCharTok{+}
+  \FunctionTok{geom\_vline}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{xintercept=}\FunctionTok{mean}\NormalTok{(SHCOMP\_log)), }\AttributeTok{color=}\NormalTok{color2, }\AttributeTok{linetype=}\NormalTok{lt, }\AttributeTok{size=}\NormalTok{sz)}
+\NormalTok{h10 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(df, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{FTSE\_log))}\SpecialCharTok{+} \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"FTSE 100 Index"}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{geom\_histogram}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{y=}\NormalTok{..density..), }\AttributeTok{colour=}\NormalTok{color1, }\AttributeTok{fill=}\NormalTok{fill1)}\SpecialCharTok{+}
+  \FunctionTok{geom\_density}\NormalTok{(}\AttributeTok{alpha=}\NormalTok{alp, }\AttributeTok{fill=}\NormalTok{fill2)}\SpecialCharTok{+}
+  \FunctionTok{geom\_vline}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{xintercept=}\FunctionTok{mean}\NormalTok{(FTSE\_log)), }\AttributeTok{color=}\NormalTok{color2, }\AttributeTok{linetype=}\NormalTok{lt, }\AttributeTok{size=}\NormalTok{sz)}
+\NormalTok{h11 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(df, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{respLAG))}\SpecialCharTok{+} \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"OILPRICE {-} lagged version"}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{geom\_histogram}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{y=}\NormalTok{..density..), }\AttributeTok{colour=}\NormalTok{color1, }\AttributeTok{fill=}\NormalTok{fill1)}\SpecialCharTok{+}
+  \FunctionTok{geom\_density}\NormalTok{(}\AttributeTok{alpha=}\NormalTok{alp, }\AttributeTok{fill=}\NormalTok{fill2)}\SpecialCharTok{+}
+  \FunctionTok{geom\_vline}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{xintercept=}\FunctionTok{mean}\NormalTok{(respLAG)), }\AttributeTok{color=}\NormalTok{color2, }\AttributeTok{linetype=}\NormalTok{lt, }\AttributeTok{size=}\NormalTok{sz)}
+
+\NormalTok{hist\_list }\OtherTok{=} \FunctionTok{list}\NormalTok{(h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11)}
+
+\FunctionTok{plot\_grid}\NormalTok{(}\AttributeTok{plotlist =}\NormalTok{ hist\_list,}
+          \AttributeTok{labels =} \FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}A\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}B\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}D\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}E\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}F\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}G\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}H\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}I\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}J\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}K\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}L\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}M\textquotesingle{}}\NormalTok{),}
+          \AttributeTok{label\_x =} \FloatTok{0.01}\NormalTok{,}
+          \AttributeTok{label\_y =} \FloatTok{0.87}\NormalTok{,}
+          \AttributeTok{hjust =} \SpecialCharTok{{-}}\FloatTok{0.5}\NormalTok{,}
+          \AttributeTok{vjust =} \SpecialCharTok{{-}}\FloatTok{0.5}\NormalTok{,}
+          \AttributeTok{label\_fontfamily =} \StringTok{"serif"}\NormalTok{,}
+          \AttributeTok{label\_fontface =} \StringTok{"plain"}\NormalTok{,}
+          \AttributeTok{label\_colour =} \StringTok{"blue"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+\end{verbatim}
+
+\includegraphics{Oil-Project---Ivan-Berlim-Gonçalves_files/figure-latex/unnamed-chunk-12-1.pdf}
+
+With the exception of the `BDIY\_log', most of the distributions don't
+follow a Gaussian (normal) distribution.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{variables-correlation}{%
+\paragraph{Variables Correlation}\label{variables-correlation}}
+
+As seen, most of the variables don't follow a normal distribution, so it
+would be an assertive strategy to make the assumption that the
+variables' parameters are distribution-free. For that, we shall use a
+non-parametric approach to better suit the different distributions.
+Since we have quantitative non-normal variables on input and the same
+type in the output, the \texttt{Spearman\ test} would be a great pick
+for comparing these features.
+
+The building of the correlation matrix using the Spearman test can help
+us understand the correlations and which features have significant
+levels, and which don't.
+
+We'll use the P-value to interpret the results. The null hypothesis is
+that there is no relation whatsoever between the variables (correlation
+= 0).
+
+P-test interpretation wise: higher p-values mean correlations closer to
+zero and low p-values mean correlation different than zero between the
+variables and Y.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Building a correlation Matrix}
+\NormalTok{cor.mtest }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(mat, ...) \{}
+\NormalTok{    mat }\OtherTok{\textless{}{-}} \FunctionTok{as.matrix}\NormalTok{(mat)}
+\NormalTok{    n }\OtherTok{\textless{}{-}} \FunctionTok{ncol}\NormalTok{(mat)}
+\NormalTok{    p.mat}\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\ConstantTok{NA}\NormalTok{, n, n)}
+    \FunctionTok{diag}\NormalTok{(p.mat) }\OtherTok{\textless{}{-}} \DecValTok{0}
+    \ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\NormalTok{(n }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{)) \{}
+        \ControlFlowTok{for}\NormalTok{ (j }\ControlFlowTok{in}\NormalTok{ (i }\SpecialCharTok{+} \DecValTok{1}\NormalTok{)}\SpecialCharTok{:}\NormalTok{n) \{}
+\NormalTok{            tmp }\OtherTok{\textless{}{-}} \FunctionTok{cor.test}\NormalTok{(mat[, i], mat[, j], ...)}
+\NormalTok{            p.mat[i, j] }\OtherTok{\textless{}{-}}\NormalTok{ p.mat[j, i] }\OtherTok{\textless{}{-}}\NormalTok{ tmp}\SpecialCharTok{$}\NormalTok{p.value}
+\NormalTok{        \}}
+\NormalTok{    \}}
+  \FunctionTok{colnames}\NormalTok{(p.mat) }\OtherTok{\textless{}{-}} \FunctionTok{rownames}\NormalTok{(p.mat) }\OtherTok{\textless{}{-}} \FunctionTok{colnames}\NormalTok{(mat)}
+\NormalTok{  p.mat}
+\NormalTok{\}}
+
+\CommentTok{\# matrix of the p{-}value of the correlation}
+\NormalTok{p.mat }\OtherTok{\textless{}{-}} \FunctionTok{cor.mtest}\NormalTok{(df, }\AttributeTok{method =} \StringTok{\textquotesingle{}spearman\textquotesingle{}}\NormalTok{, }\AttributeTok{exact=}\ConstantTok{FALSE}\NormalTok{)}
+\NormalTok{p.mat}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                 OILPRICE     BDIY_log       SPX_log       DX1_log       GC1_log
+## OILPRICE    0.000000e+00 9.878893e-94  1.164449e-62 3.393567e-222  4.534907e-90
+## BDIY_log    9.878893e-94 0.000000e+00  6.792721e-26  1.025300e-66  3.120209e-12
+## SPX_log     1.164449e-62 6.792721e-26  0.000000e+00 4.618178e-122 5.540047e-294
+## DX1_log    3.393567e-222 1.025300e-66 4.618178e-122  0.000000e+00 7.575202e-189
+## GC1_log     4.534907e-90 3.120209e-12 5.540047e-294 7.575202e-189  0.000000e+00
+## HO1_log    1.329004e-258 2.946376e-60 1.383726e-143 2.347075e-294 3.759788e-200
+## USCI_log   9.042281e-178 6.261781e-36 1.183454e-141 5.987330e-298 5.283737e-256
+## GNR_log    1.652549e-190 5.182126e-32  8.890018e-61 1.727438e-279 1.763336e-151
+## SHCOMP_log 4.635703e-193 6.546882e-72 1.049770e-111 6.663341e-202 3.874057e-110
+## FTSE_log    3.288032e-08 2.359658e-03 8.597015e-120  1.514743e-03  9.516503e-38
+## respLAG     0.000000e+00 1.454298e-94  6.127019e-62 5.106686e-225  3.118096e-90
+##                  HO1_log      USCI_log       GNR_log    SHCOMP_log
+## OILPRICE   1.329004e-258 9.042281e-178 1.652549e-190 4.635703e-193
+## BDIY_log    2.946376e-60  6.261781e-36  5.182126e-32  6.546882e-72
+## SPX_log    1.383726e-143 1.183454e-141  8.890018e-61 1.049770e-111
+## DX1_log    2.347075e-294 5.987330e-298 1.727438e-279 6.663341e-202
+## GC1_log    3.759788e-200 5.283737e-256 1.763336e-151 3.874057e-110
+## HO1_log     0.000000e+00 1.512872e-270 3.812661e-208 2.106332e-169
+## USCI_log   1.512872e-270  0.000000e+00 1.232274e-298 3.848899e-163
+## GNR_log    3.812661e-208 1.232274e-298  0.000000e+00 3.509312e-120
+## SHCOMP_log 2.106332e-169 3.848899e-163 3.509312e-120  0.000000e+00
+## FTSE_log    2.122789e-03  4.528966e-07  7.927264e-06  2.344613e-03
+## respLAG    1.779613e-263 5.687291e-180 2.645174e-194 1.610871e-189
+##                 FTSE_log       respLAG
+## OILPRICE    3.288032e-08  0.000000e+00
+## BDIY_log    2.359658e-03  1.454298e-94
+## SPX_log    8.597015e-120  6.127019e-62
+## DX1_log     1.514743e-03 5.106686e-225
+## GC1_log     9.516503e-38  3.118096e-90
+## HO1_log     2.122789e-03 1.779613e-263
+## USCI_log    4.528966e-07 5.687291e-180
+## GNR_log     7.927264e-06 2.645174e-194
+## SHCOMP_log  2.344613e-03 1.610871e-189
+## FTSE_log    0.000000e+00  2.247735e-08
+## respLAG     2.247735e-08  0.000000e+00
+\end{verbatim}
+
+As we can see from the correlation matrix above, almost all of the
+features have extremely low values. That means that they have a
+correlation different than zero to the Y variable. But when we take a
+look at the \texttt{FTSE\_log} feature, we notice some relatively higher
+values compared to the other features.
+
+If we select a threshold (0,1\%) to the significance levels (the
+probability of rejecting the null hypothesis given that it is true), we
+will notice that some of the FTSE 100 Indexes stay above of the
+threshold. This can be seen below in the graphical correlation matrix.
+The squares marked with an `X' mean that the value is higher than the
+threshold. In addition, all the other \texttt{FTSE\_log} correlation
+values are kinda low compared to other features.
+
+We can say that all but the FTSE 100 index have a different than zero
+correlation with \texttt{OILPRICE} variable.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{corr\_mat}\OtherTok{=}\FunctionTok{cor}\NormalTok{(df,}\AttributeTok{method=}\StringTok{"s"}\NormalTok{)}
+\NormalTok{col }\OtherTok{\textless{}{-}} \FunctionTok{colorRampPalette}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"\#BB4444"}\NormalTok{, }\StringTok{"\#EE9988"}\NormalTok{, }\StringTok{"\#FFFFFF"}\NormalTok{, }\StringTok{"\#77AADD"}\NormalTok{, }\StringTok{"\#4477AA"}\NormalTok{))}
+\FunctionTok{corrplot}\NormalTok{(corr\_mat, }\AttributeTok{method=}\StringTok{"color"}\NormalTok{, }\AttributeTok{col=}\FunctionTok{col}\NormalTok{(}\DecValTok{200}\NormalTok{),  }
+         \AttributeTok{type=}\StringTok{"upper"}\NormalTok{, }\AttributeTok{order=}\StringTok{"hclust"}\NormalTok{, }
+         \AttributeTok{addCoef.col =} \StringTok{"black"}\NormalTok{,}
+         \AttributeTok{tl.col=}\StringTok{"black"}\NormalTok{, }\AttributeTok{tl.srt=}\DecValTok{45}\NormalTok{,}
+         \CommentTok{\# Combine with significance}
+         \AttributeTok{p.mat =}\NormalTok{ p.mat, }\AttributeTok{sig.level =} \FloatTok{0.001}\NormalTok{, }\AttributeTok{insig =} \StringTok{"pch"}\NormalTok{, }
+         \CommentTok{\# hide correlation coefficient on the principal diagonal}
+         \AttributeTok{diag=}\ConstantTok{FALSE} 
+\NormalTok{         )}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Oil-Project---Ivan-Berlim-Gonçalves_files/figure-latex/unnamed-chunk-14-1.pdf}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{data-preparation-1}{%
+\subsubsection{5 - DATA PREPARATION}\label{data-preparation-1}}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{variables-transformation}{%
+\paragraph{Variables Transformation}\label{variables-transformation}}
+
+As informed in the dataset description, the data values are already
+logged transformations of the original format. This means that we don't
+need to do any other treatment to the data and we can model it as it is.
+In addition, any other additional transformation would difficult the
+model interpretation and unnecessarily increase its complexity.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{gamlss-model}{%
+\paragraph{GAMLSS Model}\label{gamlss-model}}
+
+The GAMLSS library is well suited for our data because of its ability to
+handle asymmetric distributions, including high skewed and/or kurtotic
+distributions. The package is also ready to deal with addictive
+non-parametric functions.
+
+For this project, we'll use the RS algorithm. It usually works with four
+parameters: location (\texttt{mu}), scale (\texttt{sigma}), and two
+shape parameters (\texttt{nu} and \texttt{tau}), which are estimated by
+a penalizing likelihood function \texttt{k}. The model also accepts
+additive terms such as smoothing functions for the continuous
+explanatory variable x
+
+\hypertarget{family-used-and-performance-indicators}{%
+\paragraph{Family used and performance
+indicators}\label{family-used-and-performance-indicators}}
+
+For the model to work properly we need to evaluate which distribution
+will be passed to it. This was a process of trial and error between the
+long list of different distributions available in the GAMLSS library.
+The complete list of the distribution is linked in the Bibliography
+section.
+
+A lot of different distributions were tested and the Box-Cox power
+exponential (BCPE) presented some of the lowest non-parametric test
+values (Global Deviation - GD, Akaike Information Criterion - AIC, and
+Schwarz Bayesian Criterion - SBC) among all while well-fitting the
+OILPRICE distribution curve.
+
+Functions used with the BCPE family distribution:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# showing available link functions for BCPE distribution parameters}
+\FunctionTok{show.link}\NormalTok{(}\StringTok{\textquotesingle{}BCPE\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $mu
+## c("inverse", "log", "identity", "own")
+## 
+## $sigma
+## c("inverse", "log", "identity", "own")
+## 
+## $nu
+## c("inverse", "log", "identity", "own")
+## 
+## $tau
+## c("logshiftto1", "log", "identity", "own")
+\end{verbatim}
+
+In the graph below, the red line represents the Box-Cox Power
+Exponential (BCPE) compared with the \texttt{OILPRICE} distribution
+(green line). They show some resemblance and seem sufficiently good for
+modeling.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{histDist}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{OILPRICE,}
+         \AttributeTok{family =}\NormalTok{ BCPE,}
+         \AttributeTok{density =} \ConstantTok{TRUE}\NormalTok{,}
+         \AttributeTok{main =} \StringTok{\textquotesingle{}The Oil Price and the fitted BCPE distribution\textquotesingle{}}\NormalTok{,}
+         \AttributeTok{ylab =} \StringTok{\textquotesingle{}Frequency\textquotesingle{}}\NormalTok{,}
+         \AttributeTok{xlab =} \StringTok{\textquotesingle{}Oil Price\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Oil-Project---Ivan-Berlim-Gonçalves_files/figure-latex/unnamed-chunk-16-1.pdf}
+
+\begin{verbatim}
+## 
+## Family:  c("BCPE", "Box-Cox Power Exponential") 
+## Fitting method: "nlminb" 
+## 
+## Call:  gamlssML(formula = df$OILPRICE, family = "BCPE") 
+## 
+## Mu Coefficients:
+## [1]  4.374
+## Sigma Coefficients:
+## [1]  -2.877
+## Nu Coefficients:
+## [1]  9.382
+## Tau Coefficients:
+## [1]  3.339
+## 
+##  Degrees of Freedom for the fit: 4 Residual Deg. of Freedom   996 
+## Global Deviance:     65.6076 
+##             AIC:     73.6076 
+##             SBC:     93.2387
+\end{verbatim}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{model-training}{%
+\subsubsection{6 - MODEL TRAINING}\label{model-training}}
+
+While the construction of the project I came to know that the past
+traded contracts ends up inserting some amount of noise into the data,
+negatively influencing the final model's performance. To avoid this
+issue, to keep the simplicity of the project, and to achieve better
+computational efficiency aiming to solve the proposed problem we'll have
+only one model based on the \texttt{df} data frame. I will not use any
+additive terms either, the models without them had slightly better
+results. Also, keeping only one model allows us to add more algorithm
+training cycles to achieve better results while maintaining a relatively
+low script execution time.
+
+\begin{itemize}
+\item
+  \texttt{model\_df}: used the \texttt{df} data frame and removed the
+  past traded contracts and leaving only the lagged variable with no
+  additive terms applied.
+\item
+  Train/test split: 70\% train, 30\% test
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Dividing the \textquotesingle{}df\textquotesingle{} data frame into train and test}
+\NormalTok{dt\_df }\OtherTok{=} \FunctionTok{sample}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(df), }\FunctionTok{nrow}\NormalTok{(df)}\SpecialCharTok{*}\NormalTok{.}\DecValTok{7}\NormalTok{, }\AttributeTok{replace =} \ConstantTok{FALSE}\NormalTok{)}
+\NormalTok{train\_df }\OtherTok{\textless{}{-}}\NormalTok{ df[dt\_df, ]}
+\NormalTok{test\_df }\OtherTok{\textless{}{-}}\NormalTok{ df[}\SpecialCharTok{{-}}\NormalTok{dt\_df, ]}
+
+\FunctionTok{print}\NormalTok{(}\StringTok{\textquotesingle{}Data splitted: 70\% train, 30\% test\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Data splitted: 70% train, 30% test"
+\end{verbatim}
+
+Definition of the model using BCPE as the family of distribution and 350
+algorithm cycles. In my case, the algorithm converged at approximately
+240 cycles.
+
+I built a conditional check to load the trained model if it exists or to
+refit if it doesn't.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\# check if model exists? If not, refit:}
+\ControlFlowTok{if}\NormalTok{(}\FunctionTok{file.exists}\NormalTok{(}\StringTok{"gamlss\_oil\_model.rda"}\NormalTok{)) \{}
+    \DocumentationTok{\#\# load model}
+    \FunctionTok{load}\NormalTok{(}\StringTok{"gamlss\_oil\_model.rda"}\NormalTok{)}
+\NormalTok{\} }\ControlFlowTok{else}\NormalTok{ \{}
+    \DocumentationTok{\#\# (re)fit the model}
+\NormalTok{    model\_df }\OtherTok{\textless{}{-}} \FunctionTok{gamlss}\NormalTok{(}\AttributeTok{formula =}\NormalTok{ OILPRICE }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ., }\AttributeTok{family =}\NormalTok{ BCPE, }\AttributeTok{data =}\NormalTok{ train\_df, }\AttributeTok{control =} \FunctionTok{gamlss.control}\NormalTok{(}\AttributeTok{n.cyc =} \DecValTok{350}\NormalTok{)) }
+\NormalTok{\}}
+
+\CommentTok{\# save the model}
+\FunctionTok{save}\NormalTok{(model\_df, }\AttributeTok{file =} \StringTok{"gamlss\_oil\_model.rda"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Printing a statistic summary on the model
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(model\_df)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in summary.gamlss(model_df): summary: vcov has failed, option qr is used instead
+\end{verbatim}
+
+\begin{verbatim}
+## ******************************************************************
+## Family:  c("BCPE", "Box-Cox Power Exponential") 
+## 
+## Call:  gamlss(formula = OILPRICE ~ ., family = BCPE, data = train_df,  
+##     control = gamlss.control(n.cyc = 350)) 
+## 
+## Fitting method: RS() 
+## 
+## ------------------------------------------------------------------
+## Mu link function:  identity
+## Mu Coefficients:
+##              Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)  0.447840   0.222206   2.015 0.044248 *  
+## BDIY_log    -0.001767   0.001683  -1.050 0.294105    
+## SPX_log     -0.101904   0.012123  -8.406 2.43e-16 ***
+## DX1_log     -0.021347   0.022834  -0.935 0.350173    
+## GC1_log     -0.068064   0.011230  -6.061 2.23e-09 ***
+## HO1_log      0.004727   0.010092   0.468 0.639656    
+## USCI_log     0.063255   0.017820   3.550 0.000412 ***
+## GNR_log      0.009219   0.017327   0.532 0.594862    
+## SHCOMP_log  -0.003182   0.004702  -0.677 0.498855    
+## FTSE_log     0.093224   0.017879   5.214 2.44e-07 ***
+## respLAG      0.960363   0.007368 130.339  < 2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## ------------------------------------------------------------------
+## Sigma link function:  log
+## Sigma Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) -5.14670    0.04404  -116.9   <2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## ------------------------------------------------------------------
+## Nu link function:  identity 
+## Nu Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)
+## (Intercept)   -4.405      7.251  -0.607    0.544
+## 
+## ------------------------------------------------------------------
+## Tau link function:  log 
+## Tau Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) -0.30652    0.05447  -5.627 2.66e-08 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## ------------------------------------------------------------------
+## No. of observations in the fit:  700 
+## Degrees of Freedom for the fit:  14
+##       Residual Deg. of Freedom:  686 
+##                       at cycle:  240 
+##  
+## Global Deviance:     -3434.44 
+##             AIC:     -3406.44 
+##             SBC:     -3342.725 
+## ******************************************************************
+\end{verbatim}
+
+Due to the elevated significance values presented at the correlation
+matrix and its respective plot, we have to be aware of signs of
+overfitting. Therefore, the models' evaluation metrics AIC and SBC are
+not the best metrics to evaluate the model's performance. Global
+deviance is a good performance metric, but again, it also can suffer the
+effects of possible overfitting.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{model-evaluation}{%
+\subsubsection{7 - MODEL EVALUATION}\label{model-evaluation}}
+
+Now let's predict the test subset, calculate its percentage deviation
+and analyze the results.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Prediction}
+\NormalTok{test\_df}\SpecialCharTok{$}\NormalTok{pred }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(model\_df, }\AttributeTok{newdata=}\NormalTok{test\_df, }\AttributeTok{type =} \StringTok{"response"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in predict.gamlss(model_df, newdata = test_df, type = "response"): There is a discrepancy  between the original and the re-fit 
+##  used to achieve 'safe' predictions 
+## 
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Deviation calculation}
+\NormalTok{test\_df}\SpecialCharTok{$}\NormalTok{pred.deviation  }\OtherTok{\textless{}{-}} \FunctionTok{round}\NormalTok{(test\_df}\SpecialCharTok{$}\NormalTok{pred}\SpecialCharTok{/}\NormalTok{test\_df}\SpecialCharTok{$}\NormalTok{OILPRICE,}\DecValTok{10}\NormalTok{)}
+\NormalTok{test\_df}\SpecialCharTok{$}\NormalTok{pred.deviation  }\OtherTok{\textless{}{-}}\NormalTok{ test\_df}\SpecialCharTok{$}\NormalTok{pred.deviation}\DecValTok{{-}1}
+
+\CommentTok{\# Plotting prediction\textquotesingle{}s deviation}
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow=}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{))}
+\FunctionTok{hist}\NormalTok{(}\DecValTok{100}\SpecialCharTok{*}\NormalTok{test\_df}\SpecialCharTok{$}\NormalTok{pred.deviation, }\AttributeTok{main=}\StringTok{"Prediction +{-}2\% deviation interval"}\NormalTok{, }\AttributeTok{xlab =} \StringTok{"Deviation percentage"}\NormalTok{, }\AttributeTok{labels =}\NormalTok{ T, }\AttributeTok{xlim =}\FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{), }\AttributeTok{ylim =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{150}\NormalTok{))}
+\FunctionTok{hist}\NormalTok{(}\DecValTok{100}\SpecialCharTok{*}\NormalTok{test\_df}\SpecialCharTok{$}\NormalTok{pred.deviation, }\AttributeTok{main=}\StringTok{"Prediction +{-}.5\% deviation interval"}\NormalTok{, }\AttributeTok{xlab =} \StringTok{"Deviation percentage"}\NormalTok{, }\AttributeTok{labels =}\NormalTok{ T, }\AttributeTok{xlim =}\FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\FloatTok{0.5}\NormalTok{,}\FloatTok{0.5}\NormalTok{), }\AttributeTok{ylim =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{150}\NormalTok{), }\AttributeTok{breaks =} \DecValTok{32}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Oil-Project---Ivan-Berlim-Gonçalves_files/figure-latex/unnamed-chunk-20-1.pdf}
+
+The interval of 1\% deviation of the predictions shows us an important
+metric to evaluate the model. We can see that the range of deviation in
+the first graph is 2\%. Considering that we are dealing with price
+values, a 2\% deviation is a very high deviation. Given the volume of
+negotiations and the values involved, the expected oscillation in this
+business segment is about 1\%. An excellent deviation oscillation range
+would be considered about 0.5\%.
+
+Also, this information is a good metric to evaluate the model's
+performance. The ideal scenario would be to feed additional information
+to the model to see if it is overfitted. However, while elaborating on
+this project, I came across different models and different models
+metrics and I'm confident that the model is not under fitted or
+overfitted.
+
+Finally, let's see the percentage of values between -+1\% and +-0.5\%
+deviation range and analyze if the results are sufficient for our
+problem.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{test\_dev }\OtherTok{\textless{}{-}} \DecValTok{100}\SpecialCharTok{*}\NormalTok{test\_df}\SpecialCharTok{$}\NormalTok{pred.deviation}
+\NormalTok{test\_1dev }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{(}\FunctionTok{abs}\NormalTok{(test\_dev) }\SpecialCharTok{\textless{}=} \DecValTok{1}\NormalTok{)}
+\NormalTok{test\_05dev }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{(}\FunctionTok{abs}\NormalTok{(test\_dev) }\SpecialCharTok{\textless{}=} \FloatTok{0.5}\NormalTok{)}
+\NormalTok{test\_size }\OtherTok{\textless{}{-}} \FunctionTok{nrow}\NormalTok{(test\_df)}
+
+\NormalTok{test\_in\_1dev }\OtherTok{=}\NormalTok{ (test\_1dev }\SpecialCharTok{/}\NormalTok{ test\_size)}\SpecialCharTok{*}\DecValTok{100}
+\NormalTok{test\_in\_05dev }\OtherTok{=}\NormalTok{ (test\_05dev }\SpecialCharTok{/}\NormalTok{ test\_size)}\SpecialCharTok{*}\DecValTok{100}
+
+\FunctionTok{paste0}\NormalTok{(}\FunctionTok{round}\NormalTok{(test\_in\_1dev,}\DecValTok{2}\NormalTok{), }\StringTok{\textquotesingle{}\% of the predicted values are in a +{-}1\% deviation margin to the real values\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "93.33% of the predicted values are in a +-1% deviation margin to the real values"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{paste0}\NormalTok{(}\FunctionTok{round}\NormalTok{(test\_in\_05dev,}\DecValTok{2}\NormalTok{), }\StringTok{\textquotesingle{}\% of the predicted values are in a +{-}0.5\% deviation margin to the real values\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "79% of the predicted values are in a +-0.5% deviation margin to the real values"
+\end{verbatim}
+
+We have achieved our goal! 93\% of the predicted values were +-1\% in a
+deviation margin, and 79\% in a +-0.5\% margin.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{residuals}{%
+\paragraph{Residuals}\label{residuals}}
+
+Errors and residuals are two closely related and easily confused
+measures of the deviation. The error is the predicted value minus the
+true value and the residual is the difference between the observed value
+and the estimated value of the quantity of interest
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(model\_df)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Oil-Project---Ivan-Berlim-Gonçalves_files/figure-latex/unnamed-chunk-22-1.pdf}
+
+\begin{verbatim}
+## ******************************************************************
+##        Summary of the Quantile Residuals
+##                            mean   =  -0.05313394 
+##                        variance   =  0.9967813 
+##                coef. of skewness  =  0.03337896 
+##                coef. of kurtosis  =  2.92972 
+## Filliben correlation coefficient  =  0.9995241 
+## ******************************************************************
+\end{verbatim}
+
+As we can see, the density estimate follows a normal distribution, and
+consequently, the observed sample percentiles of the residuals are
+linear. This means that the error terms are normally distributed.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{worm-plot}{%
+\paragraph{Worm Plot}\label{worm-plot}}
+
+The same thing reflects on the worm plot, where all of the residuals are
+in or at the border of the dotted confidence bands. This indicates the
+adequacy in modeling the distribution.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Plotting residuals}
+\FunctionTok{wp}\NormalTok{(model\_df)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Oil-Project---Ivan-Berlim-Gonçalves_files/figure-latex/unnamed-chunk-23-1.pdf}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{metrics-non-parametric-tests}{%
+\paragraph{Metrics: Non-parametric
+Tests}\label{metrics-non-parametric-tests}}
+
+Let's see the non-parametric numbers
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Getting each model\textquotesingle{}s non parametric test}
+
+\NormalTok{GD }\OtherTok{=} \FunctionTok{c}\NormalTok{(model\_df}\SpecialCharTok{$}\NormalTok{G.deviance) }\CommentTok{\#Deviation}
+\NormalTok{AIC }\OtherTok{=} \FunctionTok{c}\NormalTok{(model\_df}\SpecialCharTok{$}\NormalTok{aic)}\CommentTok{\# Overfitting}
+\NormalTok{SBC }\OtherTok{=} \FunctionTok{c}\NormalTok{(model\_df}\SpecialCharTok{$}\NormalTok{sbc)}\CommentTok{\# Overfitting}
+
+\FunctionTok{paste0}\NormalTok{(}\StringTok{\textquotesingle{}The model Global Deviation {-} GD was: \textquotesingle{}}\NormalTok{, }\FunctionTok{round}\NormalTok{(GD,}\DecValTok{2}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "The model Global Deviation - GD was: -3434.44"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{paste0}\NormalTok{(}\StringTok{\textquotesingle{}The model Akaike Information Criterion {-} AIC was: \textquotesingle{}}\NormalTok{, }\FunctionTok{round}\NormalTok{(AIC,}\DecValTok{2}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "The model Akaike Information Criterion - AIC was: -3406.44"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{paste0}\NormalTok{(}\StringTok{\textquotesingle{}The model Schwarz Bayesian Criterion {-} SBC was: \textquotesingle{}}\NormalTok{, }\FunctionTok{round}\NormalTok{(SBC,}\DecValTok{2}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "The model Schwarz Bayesian Criterion - SBC was: -3342.73"
+\end{verbatim}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{bonus-final-price-in-us-dollar}{%
+\paragraph{BONUS: Final Price in US
+Dollar}\label{bonus-final-price-in-us-dollar}}
+
+Finally lets transform the predictions in to real world money. Applying
+a exponential function to the predicted values can restore the real
+world values of the oil. Probably in US Dollars. Lets take a peak at the
+values and save it as a .csv file.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{oil\_dollar }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\FunctionTok{exp}\NormalTok{(test\_df}\SpecialCharTok{$}\NormalTok{pred))}
+\FunctionTok{colnames}\NormalTok{(oil\_dollar) }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"Oil price in US Dollar"}\NormalTok{)}
+\FunctionTok{head}\NormalTok{(oil\_dollar)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   Oil price in US Dollar
+## 1              104.39876
+## 2              102.81482
+## 3              104.88899
+## 4              105.17268
+## 5               98.65589
+## 6               97.28388
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{write.csv}\NormalTok{(}\AttributeTok{x=}\NormalTok{oil\_dollar, }\AttributeTok{file=}\StringTok{"oil\_predictions.csv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{conclusions}{%
+\subsubsection{8 - CONCLUSIONS}\label{conclusions}}
+
+Not using the past contracts variables \texttt{CL\#\_log} was a good
+strategy to not impose unnecessary noise into the data. The features
+used in \texttt{df} data frame were sufficiently good and at the same
+time kept the model simple and effective. The high significance in the
+correlation matrix imposed a doubt whether the model had overfitted or
+not but the model results on the test data and the robust analysis on
+its residuals supports the idea that the model is just on the right
+spot. The model returned a high performance on predicting the values,
+delivering a high-quality standard prevision, and more important:
+answered the problem question and achieved the goals.
+
+As said during the execution of this project, the model could predict
+93\% of the values within 1\% or less deviation margin, and 78\%
+accuracy on 0.5\% deviation margin. Maybe some tuning on the weights and
+control parameters of the model could have improved the results, and
+maybe some additional tuning on the previous models that I used with
+additive terms such as Cubic Splines could deliver better results. But
+as the time was a little bit short and I'm continuously learning, maybe
+I'll come back soon to this project to continue improving its results.
+
+\hypertarget{personal-conclusion}{%
+\subsubsection{9 - PERSONAL CONCLUSION}\label{personal-conclusion}}
+
+It was a very challenging project and I'm very glad that I could achieve
+good results. I tried to bring some of the research methods that I find
+relevant to the real job market while keeping it simple so that you, the
+reader, could have a relaxed, but still learningful, experience.
+
+I hope you enjoyed it! Any feedback doesn't hesitate to contact me:
+
+LinkedIn profile:
+\url{https://www.linkedin.com/in/ivan-berlim-gonçalves/?locale=en_US}
+
+\hypertarget{bibliography}{%
+\subsubsection{10 - BIBLIOGRAPHY}\label{bibliography}}
+
+\begin{itemize}
+\item
+  Stasinopoulos, M., Rigby, R. A., \& Akantziliotou, C. (2008).
+  Instructions on how to use the GAMLSS package in R. 206.
+  \url{http://www.gamlss.com/wp-content/uploads/2013/01/gamlss-manual.pdf}
+\item
+  Rigby, R., Stasinopoulos, M., Heller, G., \& De Bastiani, F. (2019).
+  Distributions for Modelling Location, Scale and Shape: Using GAMLSS in
+  R. CRC Press.
+  \url{http://www.gamlss.com/wp-content/uploads/2018/01/DistributionsForModellingLocationScaleandShape.pdf}
+\item
+  Stasinopolulos, M., Rigby, R. A., Voudouris, V., Heler, G., \&
+  Bastiani De, F. (2017). Flexible regression and smoothing the GAMLSS
+  packages in R. 571.
+  \url{http://www.gamlss.com/wp-content/uploads/2015/07/FlexibleRegressionAndSmoothingDraft-1.pdf}
+\item
+  Scandroglio, Giacomo \& Gori, Andrea \& Vaccaro, Emiliano \&
+  Voudouris, Vlasios. (2013). Estimating VaR and ES of the spot price of
+  oil using futures-varying centiles. Int. J. of Financial Engineering
+  and Risk Management. 1. 6 - 19. 10.1504/IJFERM.2013.053713.
+  \url{https://www.researchgate.net/publication/264815334_Estimating_VaR_and_ES_of_the_spot_price_of_oil_using_futures-varying_centiles}
+\item
+  RDRR.io. oil: The oil price data.
+  \url{https://rdrr.io/cran/gamlss.data/man/oil.html}
+\item
+  Kaggle: Gabriel Idalino. GAMLSS in R - Oil Price Prediction.
+  \url{https://www.kaggle.com/gabrieloliveirasan/gamlss-in-r-oil-price-prediction?scriptVersionId=74463252}
+\item
+  RDocumentation. gamlss.family: Family Objects for fitting a GAMLSS
+  model.
+  \url{https://www.rdocumentation.org/packages/gamlss.dist/versions/5.3-2/topics/gamlss.family}
+\item
+  Penn State - Eberly College of Science. Normal Probability Plot of
+  Residuals. \url{https://online.stat.psu.edu/stat462/node/122/}
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\end{document}
