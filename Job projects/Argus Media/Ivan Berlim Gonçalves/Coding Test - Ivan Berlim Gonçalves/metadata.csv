@@ -1,0 +1,300 @@
+"Labels","Class","Storage","NAs"
+"raw_data_1","target variable","numeric","double",0
+"roll_std_dev","Rolling standard deviation(window = 7)","matrix","double",6
+"roll_mean","Rolling mean (window = 7)","matrix","double",6
+"lag_1","Lagging (order = 1)","numeric","double",1
+"lead","Leading (order = 1)","numeric","double",1
+"diff","Differencing (order = 1)","numeric","double",1
+"Ratio","Ration between two input drivers","matrix","double",6
+"Product","Multiplication between two input drivers","matrix","double",6
+"roll_std","Rolling standard deviation(window = 7)","matrix","double",6
+"x"
+"1",1000
+"2",9
+"x"
+"1",6
+""
+""
+""
+""
+""
+""
+"x"
+"1","final_drivers"
+""
+""
+"Labels","Class","Storage","NAs"
+"raw_data_1","target variable","numeric","double",0
+"roll_std_dev","Rolling standard deviation(window = 7)","matrix","double",6
+"roll_mean","Rolling mean (window = 7)","matrix","double",6
+"lag_1","Lagging (order = 1)","numeric","double",1
+"lead","Leading (order = 1)","numeric","double",1
+"diff","Differencing (order = 1)","numeric","double",1
+"Ratio","Ration between two input drivers","matrix","double",6
+"Product","Multiplication between two input drivers","matrix","double",6
+"roll_std","Rolling standard deviation(window = 7)","matrix","double",6
+"x"
+"1",1000
+"2",9
+"x"
+"1",6
+""
+""
+""
+""
+""
+""
+"x"
+"1","final_drivers"
+""
+""
+"Labels","Class","Storage","NAs"
+"raw_data_1","target variable","numeric","double",0
+"roll_std_dev","Rolling standard deviation(window = 7)","matrix","double",6
+"roll_mean","Rolling mean (window = 7)","matrix","double",6
+"lag_1","Lagging (order = 1)","numeric","double",1
+"lead","Leading (order = 1)","numeric","double",1
+"diff","Differencing (order = 1)","numeric","double",1
+"Ratio","Ration between two input drivers","matrix","double",6
+"Product","Multiplication between two input drivers","matrix","double",6
+"roll_std","Rolling standard deviation(window = 7)","matrix","double",6
+"x"
+"1",1000
+"2",9
+"x"
+"1",6
+""
+""
+""
+""
+""
+""
+"x"
+"1","final_drivers"
+""
+""
+"Labels","Class","Storage","NAs"
+"raw_data_1","target variable","numeric","double",0
+"roll_std_dev","Rolling standard deviation(window = 7)","matrix","double",6
+"roll_mean","Rolling mean (window = 7)","matrix","double",6
+"lag_1","Lagging (order = 1)","numeric","double",1
+"lead","Leading (order = 1)","numeric","double",1
+"diff","Differencing (order = 1)","numeric","double",1
+"Ratio","Ration between two input drivers","matrix","double",6
+"Product","Multiplication between two input drivers","matrix","double",6
+"roll_std","Rolling standard deviation(window = 7)","matrix","double",6
+"x"
+"1",1000
+"2",9
+"x"
+"1",6
+""
+""
+""
+""
+""
+""
+"x"
+"1","final_drivers"
+""
+""
+"Labels","Class","Storage","NAs"
+"raw_data_1","target variable","numeric","double",0
+"roll_std_dev","Rolling standard deviation(window = 7)","matrix","double",6
+"roll_mean","Rolling mean (window = 7)","matrix","double",6
+"lag_1","Lagging (order = 1)","numeric","double",1
+"lead","Leading (order = 1)","numeric","double",1
+"diff","Differencing (order = 1)","numeric","double",1
+"Ratio","Ration between two input drivers","numeric","double",0
+"Product","Multiplication between two input drivers","numeric","double",0
+"roll_std","Rolling standard deviation(window = 7)","matrix","double",6
+"x"
+"1",1000
+"2",9
+"x"
+"1",6
+""
+""
+""
+""
+""
+""
+"x"
+"1","final_drivers"
+""
+""
+"Labels","Class","Storage","NAs"
+"raw_data_1","target variable","numeric","double",0
+"roll_std_dev","Rolling standard deviation(window = 7)","matrix","double",6
+"roll_mean","Rolling mean (window = 7)","matrix","double",6
+"lag_1","Lagging (order = 1)","numeric","double",1
+"lead","Leading (order = 1)","numeric","double",1
+"diff","Differencing (order = 1)","numeric","double",1
+"Ratio","Ration between two input drivers","numeric","double",0
+"Product","Multiplication between two input drivers","numeric","double",0
+"roll_std","Rolling standard deviation(window = 7)","matrix","double",6
+"x"
+"1",1000
+"2",9
+"x"
+"1",6
+""
+""
+""
+""
+""
+""
+"x"
+"1","final_drivers"
+""
+""
+"Labels","Class","Storage","NAs"
+"raw_data_1","target variable","numeric","double",0
+"roll_std_dev","Rolling standard deviation(window = 7)","matrix","double",6
+"roll_mean","Rolling mean (window = 7)","matrix","double",6
+"lag_1","Lagging (order = 1)","numeric","double",1
+"lead","Leading (order = 1)","numeric","double",1
+"diff","Differencing (order = 1)","numeric","double",1
+"Ratio","Ration between two input drivers","numeric","double",0
+"Product","Multiplication between two input drivers","numeric","double",0
+"roll_std","Rolling standard deviation(window = 7)","matrix","double",6
+"x"
+"1",1000
+"2",9
+"x"
+"1",6
+""
+""
+""
+""
+""
+""
+"x"
+"1","final_drivers"
+""
+""
+"Labels","Class","Storage","NAs"
+"raw_data_1","target variable","numeric","double",0
+"roll_std_dev","Rolling standard deviation(window = 7)","matrix","double",6
+"roll_mean","Rolling mean (window = 7)","matrix","double",6
+"lag_1","Lagging (order = 1)","numeric","double",1
+"lead","Leading (order = 1)","numeric","double",1
+"diff","Differencing (order = 1)","numeric","double",1
+"Ratio","Ration between two input drivers","numeric","double",0
+"Product","Multiplication between two input drivers","numeric","double",0
+"roll_std","Rolling standard deviation(window = 7)","matrix","double",6
+"x"
+"1",1000
+"2",9
+"x"
+"1",6
+""
+""
+""
+""
+""
+""
+"x"
+"1","final_drivers"
+""
+""
+"Labels","Class","Storage","NAs"
+"raw_data_1","target variable","numeric","double",0
+"roll_std_dev","Rolling standard deviation(window = 7)","matrix","double",6
+"roll_mean","Rolling mean (window = 7)","matrix","double",6
+"lag_1","Lagging (order = 1)","numeric","double",1
+"lead","Leading (order = 1)","numeric","double",1
+"diff","Differencing (order = 1)","numeric","double",1
+"Ratio","Ration between two input drivers","numeric","double",0
+"Product","Multiplication between two input drivers","numeric","double",0
+"roll_std","Rolling standard deviation(window = 7)","matrix","double",6
+"x"
+"1",1000
+"2",9
+"x"
+"1",6
+""
+""
+""
+""
+""
+""
+"x"
+"1","final_drivers"
+""
+""
+"Labels","Class","Storage","NAs"
+"raw_data_1","target variable","numeric","double",0
+"roll_std_dev","Rolling standard deviation(window = 7)","matrix","double",6
+"roll_mean","Rolling mean (window = 7)","matrix","double",6
+"lag_1","Lagging (order = 1)","numeric","double",1
+"lead","Leading (order = 1)","numeric","double",1
+"diff","Differencing (order = 1)","numeric","double",1
+"Ratio","Ration between two input drivers","numeric","double",0
+"Product","Multiplication between two input drivers","numeric","double",0
+"roll_std","Rolling standard deviation(window = 7)","matrix","double",6
+"x"
+"1",1000
+"2",9
+"x"
+"1",6
+""
+""
+""
+""
+""
+""
+"x"
+"1","final_drivers"
+""
+""
+"Labels","Class","Storage","NAs"
+"raw_data_1","target variable","numeric","double",0
+"roll_std_dev","Rolling standard deviation(window = 7)","matrix","double",6
+"roll_mean","Rolling mean (window = 7)","matrix","double",6
+"lag_1","Lagging (order = 1)","numeric","double",1
+"lead","Leading (order = 1)","numeric","double",1
+"diff","Differencing (order = 1)","numeric","double",1
+"Ratio","Ration between two input drivers","numeric","double",0
+"Product","Multiplication between two input drivers","numeric","double",0
+"roll_std","Rolling standard deviation(window = 7)","matrix","double",6
+"x"
+"1",1000
+"2",9
+"x"
+"1",6
+""
+""
+""
+""
+""
+""
+"x"
+"1","final_drivers"
+""
+""
+"Labels","Class","Storage","NAs"
+"raw_data_1","target variable","numeric","double",0
+"roll_std_dev","Rolling standard deviation(window = 7)","matrix","double",6
+"roll_mean","Rolling mean (window = 7)","matrix","double",6
+"lag_1","Lagging (order = 1)","numeric","double",1
+"lead","Leading (order = 1)","numeric","double",1
+"diff","Differencing (order = 1)","numeric","double",1
+"Ratio","Ration between two input drivers","numeric","double",0
+"Product","Multiplication between two input drivers","numeric","double",0
+"roll_std","Rolling standard deviation(window = 7)","matrix","double",6
+"x"
+"1",1000
+"2",9
+"x"
+"1",6
+""
+""
+""
+""
+""
+""
+"x"
+"1","final_drivers"
+""
+""

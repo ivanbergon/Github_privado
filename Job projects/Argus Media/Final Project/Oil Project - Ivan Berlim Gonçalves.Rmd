@@ -16,11 +16,14 @@ output:
 We want to predict the `OILPRICE` values given the oil dataset from GAMLSS package.
 
 The price of oil and other commodities is influenced by three major factors: supply, demand and geopolitics. But what if we could indirectly predict its price using other commodities and stock indexes?
-This is the proposed challenge that we are going to solve. We are going to make a superficial scratch on the complex world of natural resource pricing.
+
+This is the proposed challenge that we are going to solve. I'm going to make a superficial scratch on the complex world of natural resource pricing.
 
 Great! We already have our problem question:
 
 * What will be the tomorrow's oil price?
+
+We have a data set containing different prices indexes that hopefully will help predict the response variable `OILPRICE` which represents the log price of front month WTI oil contract traded by NYMEX.
 
 Now let us establish some tangible objectives to what we want as an answer.
 Given that the stock market is a complex, volatile and fast environment, we must set a goal for assessing the model's metrics. A variation of 2% in price prediction could mean a lot of wasted money depending on the amount applied. So we are going to set two high standards goals for our model performance:
@@ -34,7 +37,7 @@ We are ready to start. It's time to understand the data.
 
 ### 2 - UNDERSTANDING THE DATA
 
-#### What is GAMLSS?
+#### What is the GAMLSS package?
 
 Generalized Additive Models for Location, Scale and Shape (GAMLSS) were introduced by Rigby and Stasinopoulos (2001, 2005) and Akantziliotou et al. (2002) as a way of overcoming some of the limitations associated with Generalized Linear Models (GLM) and Generalized Additive Models (GAM) (Nelder and Wedderburn, 1972 and Hastie and Tibshirani, 1990, respectively).
 
@@ -227,15 +230,13 @@ df = oil[,-2:-15]
 head(df)
 ```
 
-Plotting the `OILPRICE` time serie.
+Plotting the `OILPRICE` time series considering the period of 365 days (1 year)
 
 ```{r}
-plot(df$OILPRICE, type = "l")
+ts(df$OILPRICE, frequency = 365) %>%
+  decompose() %>%
+  autoplot()
 ```
-
-
-
-
 
 ------------------------------------------------------------------------
 
@@ -500,7 +501,7 @@ histDist(df$OILPRICE,
 
 ### 6 - MODEL TRAINING
 
-While the construction of the project I came to know that the past traded contracts ends up inserting some amount of noise into the data, negatively influencing the final model's performance. To avoid this issue, to keep the simplicity of the project, and to achieve better computational efficiency aiming to solve the proposed problem we'll have only one model based on the `df` data frame. I will not use any additive terms either, the models without them had slightly better results. Also, keeping only one model allows us to add more algorithm training cycles to achieve better results while maintaining a relatively low script execution time.
+While the construction of the project I came to know that the past traded contracts ends up inserting certain amount of noise into the data, negatively influencing the final model's performance. To avoid this issue, to keep the simplicity of the project, and to achieve better computational efficiency and aiming to solve the proposed problem, we'll have only one model based on the `df` data frame. I will not use any additive terms either, the models without them had slightly better results. Also, keeping only one model allows us to add more algorithm training cycles to achieve better results while maintaining a relatively low script execution time.
 
 * `model_df`: used the `df` data frame and removed the past traded contracts and leaving only the lagged variable with no additive terms applied.
     
@@ -626,81 +627,6 @@ paste0('The model Schwarz Bayesian Criterion - SBC was: ', round(SBC,2))
 
 ------------------------------------------------------------------------
 
-### 8 - FORECASTING ONE DAY AHEAD
-
-Now to forecast forward we need to refit the whole time series including the test set, since recent prices are important for our model.So what will we do is fit the whole time series data and forecast to the horizon we had established which was established at “60 days.”
-
-
-```{r}
-# check if model exists? If not, refit:
-if(file.exists("gamlss_oil_model_full.rda")) {
-    # load model
-    load("gamlss_oil_model_full.rda")
- } else {
-    # (re)fit the model
-    model_df_full <- gamlss(formula = OILPRICE ~ ., family = BCPE, data = df, control = gamlss.control(n.cyc = 150)) 
- }
-
-# save the model
-save(model_df_full, file = "gamlss_oil_model_full.rda")
-```
-
-
-```{r}
-pdf.plot(model_df_full, min = 4.57, max = 4.7)
-```
-
-
-```{r}
-predict(model_df_full, type = "response")
-```
-
-
-
-```{r}
-ts(df$OILPRICE, frequency = 365) %>%
-  decompose() %>%
-  autoplot()
-```
-
-
-```{r}
-
-oildata <- window(OILPRICE)
-# Estimate parameters
-fc <- holt(oildata, h=5)
-# Accuracy of one-step-ahead training errors
-round(accuracy(fc),2)
-```
-
-
-```{r}
-autoplot(fc) +
-  autolayer(fitted(fc), series="Fitted") +
-  ylab("Oil (millions of tonnes)") + xlab("Year")
-```
-
-
-```{r}
-forecast(model_df_full)
-```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-------------------------------------------------------------------------
-
 ### 9 - CONCLUSIONS
 
 Not using the past contracts variables `CL#_log` was a good strategy to not impose unnecessary noise into the data. The features used in `df` data frame were sufficiently good and at the same time kept the model simple and effective. The high significance in the correlation matrix imposed a doubt whether the model had overfitted or not but the model results on the test data and the robust analysis on its residuals supports the idea that the model is just on the right spot. The model returned a high performance on predicting the values, delivering a high-quality standard prevision, and more important: answered the problem question and achieved the goals.
@@ -709,11 +635,12 @@ As said during the execution of this project, the model could predict 93% of the
 
 ### 10 - PERSONAL CONCLUSION
 
-It was a very challenging project and I'm very glad that I could achieve good results. I tried to bring some of the research methods that I find relevant to the real job market while keeping it simple so that you, the reader, could have a relaxed, but still learningful, experience.
+It was a very challenging project and I'm very glad that I could achieve good results. I tried to bring some of the research methods that I find relevant to the real job market while keeping it simple so that you, the reader, could have a enjoyable experience.
 
-I hope you enjoyed it! Any feedback doesn't hesitate to contact me:
+I hope you liked it! Any feedback doesn't hesitate to contact me on my LinkedIn or check out my other projects at my github page:
 
 LinkedIn profile: https://www.linkedin.com/in/ivan-berlim-gonçalves/?locale=en_US
+Github: https://github.com/ivanbergon
 
 
 ### 11 - BIBLIOGRAPHY
@@ -727,8 +654,6 @@ LinkedIn profile: https://www.linkedin.com/in/ivan-berlim-gonçalves/?locale=en_
 * Scandroglio, Giacomo & Gori, Andrea & Vaccaro, Emiliano & Voudouris, Vlasios. (2013). Estimating VaR and ES of the spot price of oil using futures-varying centiles. Int. J. of Financial Engineering and Risk Management. 1. 6 - 19. 10.1504/IJFERM.2013.053713. <https://www.researchgate.net/publication/264815334_Estimating_VaR_and_ES_of_the_spot_price_of_oil_using_futures-varying_centiles>
 
 * RDRR.io. oil: The oil price data. <https://rdrr.io/cran/gamlss.data/man/oil.html>
-
-* Kaggle: Gabriel Idalino. GAMLSS in R - Oil Price Prediction. <https://www.kaggle.com/gabrieloliveirasan/gamlss-in-r-oil-price-prediction?scriptVersionId=74463252>
 
 * RDocumentation. gamlss.family: Family Objects for fitting a GAMLSS model. <https://www.rdocumentation.org/packages/gamlss.dist/versions/5.3-2/topics/gamlss.family>
 

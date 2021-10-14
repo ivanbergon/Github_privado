@@ -218,10 +218,10 @@ pre code {
 <p>The purpose of this exercise is to design and implement an entire data preparation pipeline in R. We would like you to implement a robust, extensible and generic framework for data preparation.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBJbnN0YWxsIHBhY2thZ2VzXG5cbnBhY2thZ2VzIDwtIGMoXCJnYW1sc3NcIiwgXCJnYW1sc3MuYWRkXCIsIFwiZ2FtbHNzLmRpc3RcIiwgXCJEVFwiLCBcInJvbGxcIiwgXCJkcGx5clwiLCBcInN0YXRzXCIsIFwidHNlcmllc1wiLCBcImdncHViclwiLCBcInBzeWNoXCIsIFwibWFncml0dHJcIiwgXCJsYWJlbFZlY3RvclwiKVxuXG5pbnN0YWxsLnBhY2thZ2VzKHNldGRpZmYocGFja2FnZXMsIHJvd25hbWVzKGluc3RhbGxlZC5wYWNrYWdlcygpKSkpICBcblxuIyBsb2FkIGxpYnJhcmllc1xubGlicmFyeShnYW1sc3MpXG5saWJyYXJ5KGdhbWxzcy5hZGQpXG5saWJyYXJ5KGdhbWxzcy5kaXN0KVxubGlicmFyeShEVClcbmxpYnJhcnkocm9sbClcbmxpYnJhcnkoZHBseXIpXG5saWJyYXJ5KHN0YXRzKVxubGlicmFyeSh0c2VyaWVzKVxubGlicmFyeShnZ3B1YnIpXG5saWJyYXJ5KHBzeWNoKVxubGlicmFyeShtYWdyaXR0cilcbmxpYnJhcnkobGFiZWxWZWN0b3IpXG5saWJyYXJ5KGNvcnJwbG90KVxuYGBgIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBJbnN0YWxsIHBhY2thZ2VzXG5cbnBhY2thZ2VzIDwtIGMoXCJnYW1sc3NcIiwgXCJnYW1sc3MuYWRkXCIsIFwiZ2FtbHNzLmRpc3RcIiwgXCJEVFwiLCBcInJvbGxcIiwgXCJkcGx5clwiLCBcInN0YXRzXCIsIFwidHNlcmllc1wiLCBcImdncHViclwiLCBcInBzeWNoXCIsIFwibWFncml0dHJcIiwgXCJsYWJlbFZlY3RvclwiLCBcImNvcnJwbG90XCIpXG5cbmluc3RhbGwucGFja2FnZXMoc2V0ZGlmZihwYWNrYWdlcywgcm93bmFtZXMoaW5zdGFsbGVkLnBhY2thZ2VzKCkpKSkgIFxuXG4jIGxvYWQgbGlicmFyaWVzXG5saWJyYXJ5KGdhbWxzcylcbmxpYnJhcnkoZ2FtbHNzLmFkZClcbmxpYnJhcnkoZ2FtbHNzLmRpc3QpXG5saWJyYXJ5KERUKVxubGlicmFyeShyb2xsKVxubGlicmFyeShkcGx5cilcbmBgYCJ9 -->
 <pre class="r"><code># Install packages
 
-packages &lt;- c(&quot;gamlss&quot;, &quot;gamlss.add&quot;, &quot;gamlss.dist&quot;, &quot;DT&quot;, &quot;roll&quot;, &quot;dplyr&quot;, &quot;stats&quot;, &quot;tseries&quot;, &quot;ggpubr&quot;, &quot;psych&quot;, &quot;magrittr&quot;, &quot;labelVector&quot;)
+packages &lt;- c(&quot;gamlss&quot;, &quot;gamlss.add&quot;, &quot;gamlss.dist&quot;, &quot;DT&quot;, &quot;roll&quot;, &quot;dplyr&quot;, &quot;stats&quot;, &quot;tseries&quot;, &quot;ggpubr&quot;, &quot;psych&quot;, &quot;magrittr&quot;, &quot;labelVector&quot;, &quot;corrplot&quot;)
 
 install.packages(setdiff(packages, rownames(installed.packages())))  
 
@@ -231,18 +231,77 @@ library(gamlss.add)
 library(gamlss.dist)
 library(DT)
 library(roll)
-library(dplyr)
-library(stats)
-library(tseries)
-library(ggpubr)
-library(psych)
-library(magrittr)
+library(dplyr)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG5BdHRhY2hpbmcgcGFja2FnZTog4oCYZHBseXLigJlcblxuVGhlIGZvbGxvd2luZyBvYmplY3QgaXMgbWFza2VkIGZyb20g4oCYcGFja2FnZTpncmlkRXh0cmHigJk6XG5cbiAgICBjb21iaW5lXG5cblRoZSBmb2xsb3dpbmcgb2JqZWN0cyBhcmUgbWFza2VkIGZyb20g4oCYcGFja2FnZTpIbWlzY+KAmTpcblxuICAgIHNyYywgc3VtbWFyaXplXG5cblRoZSBmb2xsb3dpbmcgb2JqZWN0IGlzIG1hc2tlZCBmcm9tIOKAmHBhY2thZ2U6bmxtZeKAmTpcblxuICAgIGNvbGxhcHNlXG5cblRoZSBmb2xsb3dpbmcgb2JqZWN0IGlzIG1hc2tlZCBmcm9tIOKAmHBhY2thZ2U6TUFTU+KAmTpcblxuICAgIHNlbGVjdFxuXG5UaGUgZm9sbG93aW5nIG9iamVjdHMgYXJlIG1hc2tlZCBmcm9tIOKAmHBhY2thZ2U6c3RhdHPigJk6XG5cbiAgICBmaWx0ZXIsIGxhZ1xuXG5UaGUgZm9sbG93aW5nIG9iamVjdHMgYXJlIG1hc2tlZCBmcm9tIOKAmHBhY2thZ2U6YmFzZeKAmTpcblxuICAgIGludGVyc2VjdCwgc2V0ZGlmZiwgc2V0ZXF1YWwsIHVuaW9uXG4ifQ== -->
+<pre><code>
+Attaching package: ‘dplyr’
+
+The following object is masked from ‘package:gridExtra’:
+
+    combine
+
+The following objects are masked from ‘package:Hmisc’:
+
+    src, summarize
+
+The following object is masked from ‘package:nlme’:
+
+    collapse
+
+The following object is masked from ‘package:MASS’:
+
+    select
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShzdGF0cylcbmxpYnJhcnkodHNlcmllcylcbmBgYCJ9 -->
+<pre class="r"><code>library(stats)
+library(tseries)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG4gICAg4oCYdHNlcmllc+KAmSB2ZXJzaW9uOiAwLjEwLTQ4XG5cbiAgICDigJh0c2VyaWVz4oCZIGlzIGEgcGFja2FnZSBmb3IgdGltZSBzZXJpZXMgYW5hbHlzaXMgYW5kIGNvbXB1dGF0aW9uYWwgZmluYW5jZS5cblxuICAgIFNlZSDigJhsaWJyYXJ5KGhlbHA9XCJ0c2VyaWVzXCIp4oCZIGZvciBkZXRhaWxzLlxuIn0= -->
+<pre><code>
+    ‘tseries’ version: 0.10-48
+
+    ‘tseries’ is a package for time series analysis and computational finance.
+
+    See ‘library(help=&quot;tseries&quot;)’ for details.</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShnZ3B1YnIpXG5saWJyYXJ5KHBzeWNoKVxuYGBgIn0= -->
+<pre class="r"><code>library(ggpubr)
+library(psych)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG5BdHRhY2hpbmcgcGFja2FnZTog4oCYcHN5Y2jigJlcblxuVGhlIGZvbGxvd2luZyBvYmplY3QgaXMgbWFza2VkIGZyb20g4oCYcGFja2FnZTpIbWlzY+KAmTpcblxuICAgIGRlc2NyaWJlXG5cblRoZSBmb2xsb3dpbmcgb2JqZWN0IGlzIG1hc2tlZCBmcm9tIOKAmHBhY2thZ2U6Z2FtbHNzLmFkZOKAmTpcblxuICAgIHRyXG5cblRoZSBmb2xsb3dpbmcgb2JqZWN0cyBhcmUgbWFza2VkIGZyb20g4oCYcGFja2FnZTpnZ3Bsb3Qy4oCZOlxuXG4gICAgJSslLCBhbHBoYVxuXG5UaGUgZm9sbG93aW5nIG9iamVjdCBpcyBtYXNrZWQgZnJvbSDigJhwYWNrYWdlOmdhbWxzc+KAmTpcblxuICAgIGNzXG4ifQ== -->
+<pre><code>
+Attaching package: ‘psych’
+
+The following object is masked from ‘package:Hmisc’:
+
+    describe
+
+The following object is masked from ‘package:gamlss.add’:
+
+    tr
+
+The following objects are masked from ‘package:ggplot2’:
+
+    %+%, alpha
+
+The following object is masked from ‘package:gamlss’:
+
+    cs</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShtYWdyaXR0cilcbmxpYnJhcnkobGFiZWxWZWN0b3IpXG5saWJyYXJ5KGNvcnJwbG90KVxuYGBgIn0= -->
+<pre class="r"><code>library(magrittr)
 library(labelVector)
 library(corrplot)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiY29ycnBsb3QgMC45MCBsb2FkZWRcbiJ9 -->
-<pre><code>corrplot 0.90 loaded</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <ol style="list-style-type: decimal">

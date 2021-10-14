@@ -1,0 +1,345 @@
+---
+title: "R Notebook"
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+editor_options:
+  chunk_output_type: inline
+---
+
+# Argus Media -  Conding Test
+
+## Ivan Berlim Gonçalves
+
+---
+
+The purpose of this exercise is to design and implement an entire data preparation pipeline in R. We would like you to implement a robust, extensible and generic framework for data preparation. 
+
+---
+
+#### Packages and Libraries
+
+```{r message=FALSE}
+
+# Verify if the package is already installed, if not, install package
+packages <- c("gamlss", "gamlss.add", "gamlss.dist", "roll", "dplyr", "tseries", "ggpubr", "magrittr", "labelVector", "corrplot", "Hmisc")
+install.packages(setdiff(packages, rownames(installed.packages())))  
+
+# Loading libraries
+library(gamlss)
+library(gamlss.add)
+library(gamlss.dist)
+# library(DT)
+library(roll)
+library(dplyr)
+# library(stats)
+library(ggpubr)
+library(tseries)
+# library(ggplot2)
+# library(dataspice)
+library(Hmisc)
+library(magrittr)
+library(labelVector)
+library(corrplot)
+```
+
+1)	Take as raw inputs to the data preparation process, the oil data from the gamlss package.
+
+```{r}
+# Raw data preparation
+data_prep <- function(rawdata) {
+  oil_data <- rawdata 
+  return(oil_data)
+}
+
+oil_data <- data_prep(gamlss.data::oil)
+
+# Printing data information
+paste0("The data set has ", nrow(oil_data), " observations and  ", ncol(oil_data), " variables. ")
+cat('\n')
+oil_col_names <- colnames(oil_data)
+cat('Columns in the data frame: \n\n')
+for (i in (1:ncol(oil))) {print(paste0("Column number: ",i, ". Variable name: ", oil_col_names[i]))}
+```
+
+---
+
+2)	Develop a process that allows us to add additional drivers which are transformations of the raw input timeseries. Include the following transformations:
+
+a.	Rolling standard deviation (of arbitrary window)
+b.	Rolling mean (of arbitrary window)
+c.	Lagging (of arbitrary order)
+d.	Leading (of arbitrary order)
+e.	Differencing
+f.	Spread (between two input drivers)
+g.	Ratio (between two input drivers)
+h.	Product (between two input drivers)
+
+* Function `data_trans` includes:
+
+roll_std_dev (Rolling standard deviation) - 7 days selected
+roll_mean (Rolling mean) - 7 days selected
+lag_1 (Lagging) - order 1 selected
+lead (Leading) - order 1 selected
+diff (Differencing)
+
+```{r}
+data_trans <- function(raw_data_1) {
+
+  # add input driver to dataframe
+  df_1 <- as.data.frame(raw_data_1)
+  oil_data_1 <- raw_data_1
+  oil_data_1 <- as.matrix(oil_data_1)
+  
+  # Rolling standard deviation, window = 7
+  roll_std_dev <- roll::roll_sd(oil_data_1, 7)
+  df_1$roll_std_dev <- roll_std_dev
+  
+  # Rolling mean, window = 7
+  roll_mean <- roll::roll_mean(oil_data_1, 7)
+  df_1$roll_mean <- roll_mean
+  
+  # Lagging, order = 1
+  df_1$lag_1 <- dplyr::lag(raw_data_1)
+  
+  # Leading, order = 1
+  df_1$lead <- dplyr::lead(raw_data_1)
+  
+  # Differencing
+  Diff <- raw_data_1 %>% diff()
+  Diff[1000] <- NA
+  df_1$diff <- Diff
+  
+  return(df_1)
+}
+
+oil_data_trans <- data_trans(oil_data$OILPRICE)
+head(oil_data_trans, n =10)
+```
+
+You can pass any dataframe column to the function. It will calculate all the compositions
+
+* Building another function called `data_trans_2` to deal with 2 drivers. It contains the Ration and Product. I couldn't solve the spread between two input drivers. Maybe I needed more time to invest in a satisfatory answer.
+
+f.	Spread (between two input drivers)
+g.	Ratio (between two input drivers)
+h.	Product (between two input drivers)
+
+```{r}
+data_trans_2 <- function(raw_data_2){
+  
+  # add input driver to dataframe
+  df_2 <- as.data.frame(raw_data_2)
+  
+  # Ratio bet
+  df_2$Ratio <- df_2[,1]/df_2[,2]
+  
+  # Product
+  df_2$Product <- df_2[,1] * df_2[,2]
+  
+  return(df_2)
+}
+
+df_2 <- data_trans_2(oil_data[, c("OILPRICE", "respLAG")])
+head(df_2, n = 10)
+```
+
+You can pass any dataframe column to the function. It will calculate the ratio and the product between the two columns
+
+3) We must be able to have composition of transformations. Example: First calculate the difference between OILPRICE and resp_LAG, and then calculate the rolling standard deviation.
+
+* Building `data_composition` function. This also works with two columns.
+
+```{r}
+data_composition <- function(raw_data_3){
+  
+  # add input driver to dataframe
+  df_3 <- as.data.frame(raw_data_3)
+  
+  # Difference
+  difference <- (df_3$OILPRICE - df_3$respLAG)
+  df_3$difference <- difference
+  difference <- as.matrix(difference)
+  
+  # Rolling standard deviation, window = 7
+  roll_std <- roll::roll_sd(difference, 7)
+  df_3$roll_std <- roll_std
+  
+  return(df_3)
+}
+
+df_3 <- data_composition(oil_data[,c("OILPRICE", "respLAG")])
+
+head(df_3, n = 10)
+```
+
+* You can pass any dataframe column to the function. It will calculate the ratio and the product between the two columns
+
+---
+
+4) The sequence of transformations, and which drivers they act on must be specified by the user. One of the main purposes of this challenge is to develop a generic framework to allow this.
+
+* While calling the previously created functions, the user need to select the correct input drivers. Then select the sequence of transformation on the `final_drivers` variable below.
+
+```{r}
+final_drivers <- cbind(oil_data_trans, df_2, df_3)
+final_drivers <- 
+  final_drivers[, c("raw_data_1", "roll_std_dev", "roll_mean",
+                       "lag_1", "lead", "diff", "Ratio", "Product",
+                       "roll_std")]
+
+head(final_drivers, n = 10)
+```
+
+---
+
+5) For all drivers, either in their raw form or those that results from the application of one or several transformations, we must keep a meta data object where the sequence of transformations is stored. This will allow us to keep track of the meaning of each new driver.
+Combine all the drivers from their raw form or those that result from the application of one or several transformations using cbind(), named dataset as final_drivers.
+
+
+* Creating meta data object:
+
+```{r}
+# labeling the variables
+print_with_label <- function(dframe){
+  stopifnot(inherits(dframe, "data.frame"))
+  labs <- labelVector::get_label(dframe, names(dframe))
+  labs <- sprintf("%s: %s", names(dframe), labs)
+  #print(dframe)
+  cat("\n")
+  cat(labs, sep = "\n")
+}
+final_drivers <-set_label(final_drivers,
+                             raw_data_1 = "target variable",
+                             roll_std_dev = "Rolling standard deviation(window = 7)",
+                             roll_std = "Rolling standard deviation(window = 7)",
+                             roll_mean = "Rolling mean (window = 7)",
+                             lag_1 = "Lagging (order = 1)",
+                             lead = "Leading (order = 1)",
+                             diff = "Differencing (order = 1)",
+                             Ratio = "Ration between two input drivers",
+                             Product = "Multiplication between two input drivers"
+                            )
+```
+
+
+
+```{r message=FALSE, warning=FALSE}
+contents(final_drivers)
+k <- contents(final_drivers, sort='names', prlevels=FALSE)
+print(k)
+
+# saving metadata.csv
+lapply(k, function(x) write.table( data.frame(x), 'metadata.csv'  , append= T, sep=',' ))
+```
+
+---
+
+6) For each driver that results from the user-specified sequence of transformations, we need to assess a few statistics:
+Normality test
+Stationarity test
+Correlation coefficient with the target
+These statistics need to be stored in the meta data object. The purpose of this is, we may be interested in keeping in the final model only drivers that are normally distributed, or only drivers whose correlation with the target is above a given threshold, or another combination of such criteria.
+
+* Normality test.
+
+```{r warning=FALSE}
+# normality graph
+normality <- function(input_driver, p_value) {
+  
+  print(ggdensity(input_driver, 
+          main = "Density plot of Rolling Standard deviation",
+          xlab = "",
+          add = 'mean',
+          ggtheme = theme_classic(),
+          rug = TRUE))
+  
+  z <- shapiro.test(input_driver)
+  print(shapiro.test(input_driver))
+  
+  if(z[2]>= p_value){
+    print('Normally Distributed')
+    x <<- sys.call()
+    x <<- as.character(x)
+    norm_lst <<- append(norm_lst, x)
+  }
+  else{
+    print('Not normally distributed')
+  }
+}
+
+# function call
+normality(final_drivers$roll_std_dev, 0.05)
+```
+
+If the result of the p-value is higher or equal to the passed p-value, the name of the variable is saved on `norm_lst` and stored in a meta data object.
+Usually, p-value <= 0.05 means that the distribution is significantly different than normal distribution.
+
+---
+
+b. Stationarity test
+
+* Augmented Dickey-Fuller (ADF) t-statistic is used to find if the series has a unit root (a series with a trend line will have a unit root and result in a large p-value). If the p-value < 0.05 then data is stationary if p-value > 0.05 then data is non-stationary.
+
+Before the test, we remove NA values and replace them with 0.
+
+```{r}
+# Stationarity check
+
+stationarity <- function(input_driver, p_value) {
+  input_driver[is.na(input_driver)] <- 0
+  tseries::adf.test(input_driver)
+  sz <- tseries::adf.test(input_driver)
+  
+    if(sz[2]<= p_value){
+    y <<- sys.call()
+    y <<- as.character(y)
+    stat_lst <<- append(norm_lst, y)
+    print(sz)
+    print('Stationary Data')
+  }
+  else{
+    print(sz)
+    print('Non-stationary Data')
+  }
+  
+}
+
+# function call
+stationarity(final_drivers$roll_mean, 0.05)
+```
+
+* To test another drivers, just replace the input_driver. The data is also stored in a metadata object
+
+```{r}
+# saving normal data in metadata_normality.csv
+try(lapply(norm_lst, function(x) write.table( data.frame(x), 'metadata_normality.csv'  , append= T, sep=',' )), silent = TRUE)
+
+# saving stationary data in stationary_normality.csv
+try(lapply(stat_lst, function(x) write.table( data.frame(x), 'metadata_stationary.csv'  , append= T, sep=',' )), silent = TRUE)
+```
+
+---
+
+c. Correlation coefficient with the target
+
+```{r}
+# Correlation coefficient
+correlation <- function(input_drivers){
+
+  input_drivers[is.na(input_drivers)] <- 0
+  corr_mat=cor(input_drivers)
+col <- colorRampPalette(c("#BB4444", "#EE9988", "#FFFFFF", "#77AADD", "#4477AA"))
+  return(corrplot(corr_mat, method="color",  
+         type="upper", order="hclust", 
+         addCoef.col = "black",
+         tl.col="black", tl.srt=45, 
+         # hide correlation coefficient on the principal diagonal
+         diag=FALSE 
+         ))
+
+}
+
+correlation(final_drivers)
+```
