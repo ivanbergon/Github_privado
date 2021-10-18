@@ -4,8 +4,6 @@ output:
   html_document: default
 ---
 
-# Argus Media - Oil Dataset Project
-
 ## Ivan Berlim Gonçalves
 
 

@@ -8,8 +8,6 @@ editor_options:
   chunk_output_type: inline
 ---
 
-# Argus Media -  Conding Test
-
 ## Ivan Berlim Gonçalves
 
 ---
